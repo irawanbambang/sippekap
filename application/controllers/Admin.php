@@ -309,7 +309,10 @@ class Admin extends CI_Controller
 		redirect('admin/daftar_admin');
 	}
 
-	
+	public function cobagithub()
+	{
+		
+	}
 
 	
 
