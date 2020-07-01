@@ -32,10 +32,10 @@
                       <td><?= $key['alamat'] ?></td>
                       <td><?= $key['no_hp'] ?></td>
                       <td>
-                        <a href="<?= base_url('index.php/') ?>admin/hapus_pemohon/<?= $key['nik'] ?>" onclick="return confirm('Yakin ingin menghapus data ini?')" class="btn btn-danger btn-box btn-sm">
+                        <!-- <a href="<?= base_url('index.php/') ?>admin/hapus_pemohon/<?= $key['nik'] ?>" onclick="return confirm('Yakin ingin menghapus data ini?')" class="btn btn-danger btn-box btn-sm">
                         <i class="fas fa-fw fa-trash-alt"></i>
-                        </a>
-                        <a href="<?= base_url('admin/lihat_pengajuan'); ?>" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
+                        </a> -->
+                        <a href="<?= base_url('admin/detail_data_pemohon'); ?>" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
                         </a>
                       </td>
                     </tr>

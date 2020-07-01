@@ -17,6 +17,7 @@
                       <th>NIK Pemilik</th>
                       <th>Nama Pemilik</th>
                       <th>Nama Kapal</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -29,12 +30,13 @@
                       <td><?= $ps['nik'] ?></td>
                       <td><?= $ps['nama'] ?></td>
                       <td><?= $ps['nama_kapal'] ?></td>
+                      <td><?= $ps['status'] ?></td>
                       <td>
-                        <?php if ($ps['status'] == 'verifikasi'){ ?>
-                        <a href="<?= base_url('index.php') ?>/kadin/pengesahan/<?= $ps['id_kp'] ?>" onclick="return confirm('Yakin ingin mengesahkan data ini?')">
-                          <button class="badge badge-primary btn-xs"><li class="fa fa-trash-o"></li>Pengesahan</button>
-                        </a>
-                        <?php } ?>
+                          <?php if ($ps['status'] == 'verifikasi'){ ?>
+                          <a href="<?= base_url('index.php') ?>/kadin/pengesahan/<?= $ps['id_kp'] ?>" onclick="return confirm('Yakin ingin mengesahkan data ini?')">
+                            <button class="badge badge-primary btn-xs"><li class="fa fa-trash-o"></li>Pengesahan</button>
+                          </a>
+                          <?php } ?>
                         <a href="<?= base_url('index.php/') ?>kadin/pengajuan/detailsurat/<?= $ps['id_kp'] ?>" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
                         </a>
                       </td>

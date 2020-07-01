@@ -1,0 +1,31 @@
+
+#User
++ Admin
+	email		: admindkp@gmail.com
+	password	: admindkp
+	
++ Kepala Dinas
+	email		: dkpkotapekalongan6@gmail.com
+	password	: admindkp
+
++ Pemohon
+	email		: wawanbatang93@gmail.com
+	password	: admindkp
+
+
+#Catatan Progress WEB
++ Hallaman pendaftaran
++ Pengajuan ususlan
++ Edit Usulan
++ Verifikasi Admin
++ Pengesahan Kadin
++ Role
+
+#Catatan Kekurangan
++ Pesan ditolak
++ Mencetak surat selesai
++ Mencetak laporan (excel)
++ Mencetak surat (pdf)
++ Lihat data pemohon
++ Tolak Pengajuan
++ Pengubahan User aktif dan role id

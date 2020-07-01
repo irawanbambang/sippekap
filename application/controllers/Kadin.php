@@ -48,7 +48,7 @@ class Kadin extends CI_Controller
 		$this->load->view('tamplates/header', $data);
 		$this->load->view('tamplates/sidebar', $data);
 		$this->load->view('tamplates/topbar', $data);
-		$this->load->view('admin/detailsurat', $data);
+		$this->load->view('kadin/detailsurat', $data);
 		$this->load->view('tamplates/footer');
 	}
 }

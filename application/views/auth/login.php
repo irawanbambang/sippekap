@@ -20,7 +20,7 @@
                     <img class="mb-3" src="<?= base_url('assets/img/logo/logo-pemkot.png') ?>" width="150px" height="197px">
                   </div>
                   <div class="text-center">
-                    <h1 class="h3"><font face="sans-serif" color="aqua"><b>SIPPEKAP</h1>
+                    <h1 class="h4 text-primary mb-4"><b>SIPPEKAP</b></h1>
                     <h2 class="h6 text-gray-900">SISTEM PENDAFTARAN KAPAL PERIKANAN</h2>
                   </div>
                   

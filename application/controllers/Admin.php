@@ -123,7 +123,7 @@ class Admin extends CI_Controller
 	// menu daftar member
 	public function daftar_pemohon()
 	{
-		$data['title'] = 'Data Pemohon';
+		$data['title'] = 'Daftar Pemohon';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
 		$data['data_pemohon'] = $this->Member_Model->getAll();
@@ -132,6 +132,20 @@ class Admin extends CI_Controller
 		$this->load->view('tamplates/sidebar', $data);
 		$this->load->view('tamplates/topbar', $data);
 		$this->load->view('admin/daftar_pemohon', $data);
+		$this->load->view('tamplates/footer');
+	}
+
+	public function detail_data_pemohon()
+	{
+		$data['title'] = 'Detail Data Pemohon';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$data['data_pemohon'] = $this->Member_Model->getAll();
+		
+		$this->load->view('tamplates/header', $data);
+		$this->load->view('tamplates/sidebar', $data);
+		$this->load->view('tamplates/topbar', $data);
+		$this->load->view('admin/detail_data_pemohon', $data);
 		$this->load->view('tamplates/footer');
 	}
 
@@ -156,8 +170,6 @@ class Admin extends CI_Controller
 		$this->load->view('admin/daftar', $data);
 		$this->load->view('tamplates/footer');
 	}
-
-	
 
 	public function lihat_pengajuan($id_kp)
 	{
@@ -309,9 +321,94 @@ class Admin extends CI_Controller
 		redirect('admin/daftar_admin');
 	}
 
-	public function cobagithub()
+
+	public function cetak_tanggal()
 	{
-		
+		$data['title'] = 'Cetak Laporan Pengajuan';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$this->load->view('tamplates/header', $data);
+		$this->load->view('tamplates/sidebar', $data);
+		$this->load->view('tamplates/topbar', $data);
+		$this->load->view('admin/filter/v_cetak_tanggal', $data);
+		$this->load->view('tamplates/footer');
+	}
+
+	public function cetak_bulan()
+	{
+		$data['title'] = 'Cetak Laporan Pengajuan';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$this->load->view('tamplates/header', $data);
+		$this->load->view('tamplates/sidebar', $data);
+		$this->load->view('tamplates/topbar', $data);
+		$this->load->view('admin/filter/v_cetak_bulan', $data);
+		$this->load->view('tamplates/footer');
+	}
+
+	public function excel()
+	{
+
+		require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
+		require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+		$cetak = new PHPExcel();
+
+		$cetak->getproperties()->setCreator("Dinas Kelautan dan Perikanan")
+								->setLastModifiedBy("DKP Kota Pekalongan")
+								->setTitle("Daftar Pendaftaran Kapal")
+								->setSubject("Admin")
+								->setDecription("Laporan Pendaftaran Kapal")
+								->setKeywords("Data Pengajuan Izin Kapal");
+
+		$cetak->setActiveSheetIndex(0);
+
+		$cetak->getAktiveSheet()->setCellValue('A1', 'NO');
+		$cetak->getAktiveSheet()->setCellValue('B1', 'NAMA KAPAL');
+		$cetak->getAktiveSheet()->setCellValue('C1', 'UKURAN(GT)');
+		$cetak->getAktiveSheet()->setCellValue('D1', 'TANDA SELAR');
+		$cetak->getAktiveSheet()->setCellValue('E1', 'MESIN(PK)');
+		$cetak->getAktiveSheet()->setCellValue('F1', 'MERK MESIN');
+		$cetak->getAktiveSheet()->setCellValue('G1', 'NAMA PEMILIK');
+		$cetak->getAktiveSheet()->setCellValue('H1', 'ALAMAT');
+		$cetak->getAktiveSheet()->setCellValue('I1', 'TANGGAL PEMBUATAN IZIN');
+		$cetak->getAktiveSheet()->setCellValue('J1', 'TANGGAL BERAKHIR IZIN');
+		$cetak->getAktiveSheet()->setCellValue('K1', 'NO. SPKPI');
+
+		$baris = 2;
+		$no = 1;
+
+		foreach ($data['kapal'] as $kp) {
+			$cetak->getActiveSheet()->setCellValue('A'.$baris, $no++);
+			$cetak->getActiveSheet()->setCellValue('B'.$baris, $kp->nama);
+			$cetak->getActiveSheet()->setCellValue('C'.$baris, $kp->ukuran);
+			$cetak->getActiveSheet()->setCellValue('D'.$baris, $kp->tanda_selar);
+			$cetak->getActiveSheet()->setCellValue('E'.$baris, $kp->mesin);
+			$cetak->getActiveSheet()->setCellValue('F'.$baris, $kp->merk_mesin);
+			$cetak->getActiveSheet()->setCellValue('G'.$baris, $kp->nama_pemilik);
+			$cetak->getActiveSheet()->setCellValue('H'.$baris, $kp->alamat);
+			$cetak->getActiveSheet()->setCellValue('I'.$baris, $kp->tgl_buat);
+			$cetak->getActiveSheet()->setCellValue('J'.$baris, $kp->tgl_akhir);
+			$cetak->getActiveSheet()->setCellValue('K'.$baris, $kp->nomor);
+
+			$baris++;
+		}
+
+		$filename = "Data_Pendaftaran".'.xlsx';
+
+		$cetak->getActiveSheet()->setTitle("Data Pendaftaran Kapal");
+
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+		header('Content-Disposition: attachment;filename="'.$filename. '"');
+		header('Cache-Control: max-age=0');
+
+		$writer=PHPExcel_IOFactory::createwriter($cetak, 'Excel2007');
+		$writer->save('php://output');
+
+
+		exit;
+
 	}
 
 	

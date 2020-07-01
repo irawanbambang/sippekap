@@ -14,8 +14,8 @@
                     <i class="fa fa-download"></i> Cetak Laporan
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Tanggal/Bulan/Tahun</a>
-                    <a class="dropdown-item" href="#">Bulan/Tahun</a>
+                    <a class="dropdown-item" href="<?php echo base_url('admin/cetak_tanggal') ?>">Tanggal/Bulan/Tahun</a>
+                    <a class="dropdown-item" href="<?php echo base_url('admin/cetak_bulan') ?>">Bulan/Tahun</a>
                     <a class="dropdown-item" href="#">Tahun</a>
                   </div>
                 </div>
