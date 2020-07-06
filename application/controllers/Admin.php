@@ -193,7 +193,7 @@ class Admin extends CI_Controller
 		$this->Form_Model->ubah($this->input->post('id'), $data);
 
 		$data = array(
-						'id_kp' => $this->input->post('id_kp'),
+						'id_kp' => $this->input->post('id'),
 						'no_surat' => $this->input->post('no_surat'),
 						'tgl_terbit' => date('Y-m-d'),
 						'tgl_kadaluwarsa' => date('Y-m-d'),
@@ -313,6 +313,20 @@ class Admin extends CI_Controller
 		$this->Admin_Model->ubah($this->input->post('id'),$data);
 		redirect('admin/daftar_user');
 	}
+	public function ubah_aktifasi($id,$is_active)
+	{
+		$is="";
+		if($is_active=="1"){
+			$is=="0";
+		}else{
+			$is="1";
+		}
+		$data = array(
+						'is_active' => $is
+		 );
+		$this->Admin_Model->ubah($id,$data);
+		redirect('admin/daftar_user');
+	}
 
 	public function hapus($id)
 	{
@@ -333,6 +347,17 @@ class Admin extends CI_Controller
 		$this->load->view('admin/filter/v_cetak_tanggal', $data);
 		$this->load->view('tamplates/footer');
 	}
+	public function cetak_tahun()
+	{
+		$data['title'] = 'Cetak Laporan Pengajuan';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$this->load->view('tamplates/header', $data);
+		$this->load->view('tamplates/sidebar', $data);
+		$this->load->view('tamplates/topbar', $data);
+		$this->load->view('admin/filter/v_cetak_tahun', $data);
+		$this->load->view('tamplates/footer');
+	}
 
 	public function cetak_bulan()
 	{
@@ -348,9 +373,23 @@ class Admin extends CI_Controller
 
 	public function excel()
 	{
+		$tgl_awal      = $this->input->post('tgl_awal');
+        $tgl_akhir  = $this->input->post('tgl_akhir');
+        $asal = $this->input->post('asal');
+        $kota="";
+        if ($asal=="1") {
+        	$kota="Kota Pekalongan";
+        }else{
+        	$Kota="Luar Kota Pekalongan";
+        }
 
-		require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
-		require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+        if ($tgl_awal > $tgl_akhir) {
+        	
+        	$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!</div>');
+        	echo '<script>window.history.back();</script>';
+        }else{
+        	include APPPATH.'third_party\PHPExcel\Classes\PHPExcel.php';
+		include APPPATH.'third_party\PHPExcel\Classes\PHPExcel\Writer\Excel2007.php';
 
 		$cetak = new PHPExcel();
 
@@ -358,59 +397,448 @@ class Admin extends CI_Controller
 								->setLastModifiedBy("DKP Kota Pekalongan")
 								->setTitle("Daftar Pendaftaran Kapal")
 								->setSubject("Admin")
-								->setDecription("Laporan Pendaftaran Kapal")
+								->setDescription("Laporan Pendaftaran Kapal")
 								->setKeywords("Data Pengajuan Izin Kapal");
+
+		$style_col = array(
+          'font' => array('bold' => true),
+          'alignment' => array(
+            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+        );
+        
+        $style_row = array(
+          'alignment' => array(
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+        );						
 
 		$cetak->setActiveSheetIndex(0);
 
-		$cetak->getAktiveSheet()->setCellValue('A1', 'NO');
-		$cetak->getAktiveSheet()->setCellValue('B1', 'NAMA KAPAL');
-		$cetak->getAktiveSheet()->setCellValue('C1', 'UKURAN(GT)');
-		$cetak->getAktiveSheet()->setCellValue('D1', 'TANDA SELAR');
-		$cetak->getAktiveSheet()->setCellValue('E1', 'MESIN(PK)');
-		$cetak->getAktiveSheet()->setCellValue('F1', 'MERK MESIN');
-		$cetak->getAktiveSheet()->setCellValue('G1', 'NAMA PEMILIK');
-		$cetak->getAktiveSheet()->setCellValue('H1', 'ALAMAT');
-		$cetak->getAktiveSheet()->setCellValue('I1', 'TANGGAL PEMBUATAN IZIN');
-		$cetak->getAktiveSheet()->setCellValue('J1', 'TANGGAL BERAKHIR IZIN');
-		$cetak->getAktiveSheet()->setCellValue('K1', 'NO. SPKPI');
+		$cetak->setActiveSheetIndex(0)->setCellValue('A1', "Data Daftar Pengajuan Perizinan");
+        $cetak->getActiveSheet()->mergeCells('A1:K1');
+        $cetak->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
+        $cetak->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
+        $cetak->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-		$baris = 2;
+		$cetak->getActiveSheet()->setCellValue('A3', 'NO');
+		$cetak->getActiveSheet()->setCellValue('B3', 'NAMA KAPAL');
+		$cetak->getActiveSheet()->setCellValue('C3', 'UKURAN(GT)');
+		$cetak->getActiveSheet()->setCellValue('D3', 'TANDA SELAR');
+		$cetak->getActiveSheet()->setCellValue('E3', 'MESIN(PK)');
+		$cetak->getActiveSheet()->setCellValue('F3', 'MERK MESIN');
+		$cetak->getActiveSheet()->setCellValue('G3', 'NAMA PEMILIK');
+		$cetak->getActiveSheet()->setCellValue('H3', 'ALAMAT');
+		$cetak->getActiveSheet()->setCellValue('I3', 'TANGGAL PEMBUATAN IZIN');
+		$cetak->getActiveSheet()->setCellValue('J3', 'TANGGAL BERAKHIR IZIN');
+		$cetak->getActiveSheet()->setCellValue('K3', 'NO. SPKPI');
+
+		$cetak->getActiveSheet()->getStyle('A3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('B3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('C3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('D3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('E3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('F3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('G3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('H3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('I3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('J3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('K3')->applyFromArray($style_col);
+
+		$kapal = $this->Surat_Model->getCetaktgl($tgl_awal,$tgl_akhir,$kota);
+
+		$baris = 4;
 		$no = 1;
 
-		foreach ($data['kapal'] as $kp) {
-			$cetak->getActiveSheet()->setCellValue('A'.$baris, $no++);
-			$cetak->getActiveSheet()->setCellValue('B'.$baris, $kp->nama);
-			$cetak->getActiveSheet()->setCellValue('C'.$baris, $kp->ukuran);
-			$cetak->getActiveSheet()->setCellValue('D'.$baris, $kp->tanda_selar);
-			$cetak->getActiveSheet()->setCellValue('E'.$baris, $kp->mesin);
-			$cetak->getActiveSheet()->setCellValue('F'.$baris, $kp->merk_mesin);
-			$cetak->getActiveSheet()->setCellValue('G'.$baris, $kp->nama_pemilik);
-			$cetak->getActiveSheet()->setCellValue('H'.$baris, $kp->alamat);
-			$cetak->getActiveSheet()->setCellValue('I'.$baris, $kp->tgl_buat);
-			$cetak->getActiveSheet()->setCellValue('J'.$baris, $kp->tgl_akhir);
-			$cetak->getActiveSheet()->setCellValue('K'.$baris, $kp->nomor);
+		foreach ($kapal as $kp) {
+			$cetak->setActiveSheetIndex(0)->setCellValue('A'.$baris, $no++);
+			$cetak->setActiveSheetIndex(0)->setCellValue('B'.$baris, $kp['nama_kapal']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('C'.$baris, $kp['muatan']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('D'.$baris, $kp['tanda_selar']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('E'.$baris, $kp['no_mesin']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('F'.$baris, $kp['merk_mesin']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('G'.$baris, $kp['nama']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('H'.$baris, $kp['alamat'].", RT :".$kp['rt']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('I'.$baris, $kp['tgl_terbit']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('J'.$baris, $kp['tgl_kadaluwarsa']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('K'.$baris, $kp['no_surat']);
+
+			$cetak->getActiveSheet()->getStyle('A'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('B'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('C'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('D'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('E'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('F'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('G'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('H'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('I'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('J'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('K'.$baris)->applyFromArray($style_row);
 
 			$baris++;
 		}
 
+		$cetak->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+        $cetak->getActiveSheet()->getColumnDimension('B')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('F')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+        $cetak->getActiveSheet()->getColumnDimension('I')->setWidth(27);
+        $cetak->getActiveSheet()->getColumnDimension('J')->setWidth(30);
+        $cetak->getActiveSheet()->getColumnDimension('K')->setWidth(30);
+
 		$filename = "Data_Pendaftaran".'.xlsx';
+
+		 $cetak->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+        
+        $cetak->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+
+		$cetak->getActiveSheet()->setTitle("Data Pendaftaran Kapal");
+
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="Daftar Pengajuan'.$filename. '"');
+		header('Cache-Control: max-age=0');
+
+		$writer=PHPExcel_IOFactory::createwriter($cetak, 'Excel2007');
+		ob_end_clean();
+		$writer->save('php://output');
+
+
+		exit;
+        }
+
+		
+
+	}
+	public function bulan()
+	{
+		$bulan      = $this->input->post('bulan');
+        $tahun  = $this->input->post('tahun');
+        $tgl_awal      = $tahun."-".$bulan."-"."1";
+        $tgl_akhir  = $tahun."-".$bulan."-"."31";
+        $asal = $this->input->post('asal');
+        $kota="";
+        if ($asal=="1") {
+        	$kota="Kota Pekalongan";
+        }else{
+        	$Kota="Luar Kota Pekalongan";
+        }
+
+        if ($tgl_awal > $tgl_akhir) {
+        	
+        	$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!</div>');
+        	echo '<script>window.history.back();</script>';
+        }else{
+        	include APPPATH.'third_party\PHPExcel\Classes\PHPExcel.php';
+		include APPPATH.'third_party\PHPExcel\Classes\PHPExcel\Writer\Excel2007.php';
+
+		$cetak = new PHPExcel();
+
+		$cetak->getproperties()->setCreator("Dinas Kelautan dan Perikanan")
+								->setLastModifiedBy("DKP Kota Pekalongan")
+								->setTitle("Daftar Pendaftaran Kapal")
+								->setSubject("Admin")
+								->setDescription("Laporan Pendaftaran Kapal ")
+								->setKeywords("Data Pengajuan Izin Kapal");
+
+		$style_col = array(
+          'font' => array('bold' => true),
+          'alignment' => array(
+            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+        );
+        
+        $style_row = array(
+          'alignment' => array(
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+        );
+		$cetak->setActiveSheetIndex(0);
+
+		$cetak->setActiveSheetIndex(0)->setCellValue('A1', "Data Daftar Pengajuan Perizinan");
+        $cetak->getActiveSheet()->mergeCells('A1:K1');
+        $cetak->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
+        $cetak->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
+        $cetak->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+		$cetak->getActiveSheet()->setCellValue('A3', 'NO');
+		$cetak->getActiveSheet()->setCellValue('B3', 'NAMA KAPAL');
+		$cetak->getActiveSheet()->setCellValue('C3', 'UKURAN(GT)');
+		$cetak->getActiveSheet()->setCellValue('D3', 'TANDA SELAR');
+		$cetak->getActiveSheet()->setCellValue('E3', 'MESIN(PK)');
+		$cetak->getActiveSheet()->setCellValue('F3', 'MERK MESIN');
+		$cetak->getActiveSheet()->setCellValue('G3', 'NAMA PEMILIK');
+		$cetak->getActiveSheet()->setCellValue('H3', 'ALAMAT');
+		$cetak->getActiveSheet()->setCellValue('I3', 'TANGGAL PEMBUATAN IZIN');
+		$cetak->getActiveSheet()->setCellValue('J3', 'TANGGAL BERAKHIR IZIN');
+		$cetak->getActiveSheet()->setCellValue('K3', 'NO. SPKPI');
+
+		$cetak->getActiveSheet()->getStyle('A3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('B3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('C3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('D3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('E3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('F3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('G3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('H3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('I3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('J3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('K3')->applyFromArray($style_col);
+
+		$kapal = $this->Surat_Model->getCetaktgl($tgl_awal,$tgl_akhir,$kota);
+
+		$baris = 4;
+		$no = 1;
+
+		foreach ($kapal as $kp) {
+			$cetak->setActiveSheetIndex(0)->setCellValue('A'.$baris, $no++);
+			$cetak->setActiveSheetIndex(0)->setCellValue('B'.$baris, $kp['nama_kapal']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('C'.$baris, $kp['muatan']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('D'.$baris, $kp['tanda_selar']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('E'.$baris, $kp['no_mesin']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('F'.$baris, $kp['merk_mesin']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('G'.$baris, $kp['nama']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('H'.$baris, $kp['alamat'].", RT :".$kp['rt']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('I'.$baris, $kp['tgl_terbit']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('J'.$baris, $kp['tgl_kadaluwarsa']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('K'.$baris, $kp['no_surat']);
+
+			$cetak->getActiveSheet()->getStyle('A'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('B'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('C'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('D'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('E'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('F'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('G'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('H'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('I'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('J'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('K'.$baris)->applyFromArray($style_row);
+
+			$baris++;
+		}
+
+		$cetak->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+        $cetak->getActiveSheet()->getColumnDimension('B')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('F')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+        $cetak->getActiveSheet()->getColumnDimension('I')->setWidth(27);
+        $cetak->getActiveSheet()->getColumnDimension('J')->setWidth(30);
+        $cetak->getActiveSheet()->getColumnDimension('K')->setWidth(30);
+
+		$filename = "Data_Pendaftaran".'.xlsx';
+
+		$cetak->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+        
+        $cetak->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 
 		$cetak->getActiveSheet()->setTitle("Data Pendaftaran Kapal");
 
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-		header('Content-Disposition: attachment;filename="'.$filename. '"');
+		header('Content-Disposition: attachment;filename="Daftar Pengajuan'.$filename. '"');
 		header('Cache-Control: max-age=0');
 
 		$writer=PHPExcel_IOFactory::createwriter($cetak, 'Excel2007');
+		ob_end_clean();
 		$writer->save('php://output');
 
 
 		exit;
+        }
+
+		
 
 	}
+public function tahun()
+	{
+		$tahun  = $this->input->post('tahun');
+        $tgl_awal      = $tahun."-01-1";
+        $tgl_akhir  = $tahun."-12-31";
+        $asal = $this->input->post('asal');
+        $kota="";
+        if ($asal=="1") {
+        	$kota="Kota Pekalongan";
+        }else{
+        	$Kota="Luar Kota Pekalongan";
+        }
 
+        if ($tgl_awal > $tgl_akhir) {
+        	
+        	$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!</div>');
+        	echo '<script>window.history.back();</script>';
+        }else{
+        	include APPPATH.'third_party\PHPExcel\Classes\PHPExcel.php';
+		include APPPATH.'third_party\PHPExcel\Classes\PHPExcel\Writer\Excel2007.php';
+
+		$cetak = new PHPExcel();
+
+		$cetak->getproperties()->setCreator("Dinas Kelautan dan Perikanan")
+								->setLastModifiedBy("DKP Kota Pekalongan")
+								->setTitle("Daftar Pendaftaran Kapal")
+								->setSubject("Admin")
+								->setDescription("Laporan Pendaftaran Kapal ")
+								->setKeywords("Data Pengajuan Izin Kapal");
+
+		$style_col = array(
+          'font' => array('bold' => true),
+          'alignment' => array(
+            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+        );
+        
+        $style_row = array(
+          'alignment' => array(
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+        );
+		$cetak->setActiveSheetIndex(0);
+
+		$cetak->setActiveSheetIndex(0)->setCellValue('A1', "Data Daftar Pengajuan Perizinan");
+        $cetak->getActiveSheet()->mergeCells('A1:K1');
+        $cetak->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
+        $cetak->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
+        $cetak->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+		$cetak->getActiveSheet()->setCellValue('A3', 'NO');
+		$cetak->getActiveSheet()->setCellValue('B3', 'NAMA KAPAL');
+		$cetak->getActiveSheet()->setCellValue('C3', 'UKURAN(GT)');
+		$cetak->getActiveSheet()->setCellValue('D3', 'TANDA SELAR');
+		$cetak->getActiveSheet()->setCellValue('E3', 'MESIN(PK)');
+		$cetak->getActiveSheet()->setCellValue('F3', 'MERK MESIN');
+		$cetak->getActiveSheet()->setCellValue('G3', 'NAMA PEMILIK');
+		$cetak->getActiveSheet()->setCellValue('H3', 'ALAMAT');
+		$cetak->getActiveSheet()->setCellValue('I3', 'TANGGAL PEMBUATAN IZIN');
+		$cetak->getActiveSheet()->setCellValue('J3', 'TANGGAL BERAKHIR IZIN');
+		$cetak->getActiveSheet()->setCellValue('K3', 'NO. SPKPI');
+
+		$cetak->getActiveSheet()->getStyle('A3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('B3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('C3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('D3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('E3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('F3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('G3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('H3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('I3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('J3')->applyFromArray($style_col);
+        $cetak->getActiveSheet()->getStyle('K3')->applyFromArray($style_col);
+
+		$kapal = $this->Surat_Model->getCetaktgl($tgl_awal,$tgl_akhir,$kota);
+
+		$baris = 4;
+		$no = 1;
+
+		foreach ($kapal as $kp) {
+			$cetak->setActiveSheetIndex(0)->setCellValue('A'.$baris, $no++);
+			$cetak->setActiveSheetIndex(0)->setCellValue('B'.$baris, $kp['nama_kapal']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('C'.$baris, $kp['muatan']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('D'.$baris, $kp['tanda_selar']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('E'.$baris, $kp['no_mesin']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('F'.$baris, $kp['merk_mesin']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('G'.$baris, $kp['nama']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('H'.$baris, $kp['alamat'].", RT :".$kp['rt']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('I'.$baris, $kp['tgl_terbit']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('J'.$baris, $kp['tgl_kadaluwarsa']);
+			$cetak->setActiveSheetIndex(0)->setCellValue('K'.$baris, $kp['no_surat']);
+
+			$cetak->getActiveSheet()->getStyle('A'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('B'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('C'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('D'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('E'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('F'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('G'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('H'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('I'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('J'.$baris)->applyFromArray($style_row);
+          	$cetak->getActiveSheet()->getStyle('K'.$baris)->applyFromArray($style_row);
+
+			$baris++;
+		}
+
+		$cetak->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+        $cetak->getActiveSheet()->getColumnDimension('B')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('F')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+        $cetak->getActiveSheet()->getColumnDimension('I')->setWidth(27);
+        $cetak->getActiveSheet()->getColumnDimension('J')->setWidth(30);
+        $cetak->getActiveSheet()->getColumnDimension('K')->setWidth(30);
+
+		$filename = "Data_Pendaftaran".'.xlsx';
+
+		$cetak->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+        
+        $cetak->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+
+		$cetak->getActiveSheet()->setTitle("Data Pendaftaran Kapal");
+
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+		header('Content-Disposition: attachment;filename="Daftar Pengajuan'.$filename. '"');
+		header('Cache-Control: max-age=0');
+
+		$writer=PHPExcel_IOFactory::createwriter($cetak, 'Excel2007');
+		ob_end_clean();
+		$writer->save('php://output');
+
+
+		exit;
+        }
+
+		
+
+	}
 	
 
 

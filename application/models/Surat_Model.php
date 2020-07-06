@@ -9,6 +9,16 @@ class Surat_Model extends CI_MOdel
 		$this->db->join('tb_identitas_pemilik','tb_kapal.nik = tb_identitas_pemilik.nik');
 		return $this->db->get('tb_surat')->result_array();
 	}
+	public function getCetaktgl($tgl_awal, $tgl_akhir, $kota)
+	{
+		# code...
+		$where = "tb_kapal.asal_ktp='".$kota."' AND tb_kapal.tgl_terbit BETWEEN '".$tgl_awal."' AND '".$tgl_akhir."'";
+		$this->db->where($where);
+		$this->db->join('tb_kapal','tb_kapal.id_kp = tb_surat.id_kp');
+		$this->db->join('tb_identitas_pemilik','tb_kapal.nik = tb_identitas_pemilik.nik');
+		return $this->db->get('tb_surat')->result_array();
+
+	}
 	public function getVerifikasi()
 	{
 		$this->db->select('*');

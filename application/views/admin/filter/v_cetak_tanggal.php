@@ -4,14 +4,22 @@
           <!-- Page Heading -->
           <h2 class="h5 mb-3 col-lg-6 text-gray-800 border-bottom-warning"><b><?= $title; ?></b></h2>
 
+          <?= $this->session->flashdata('message'); ?>
+
           <?= form_open_multipart('admin/excel'); ?>
           <div class="card mb-3 col-lg-6">
             <p class="mb-1"><i class="fas fa-fw fa-filter"></i>&nbsp<b>Filter</b></p>
             <hr>
-            <td><b>Tanggal :</b></td>
+            <td><b>Tanggal Awal :</b></td>
             <td>
               <div class="form-group">
-                <input type="date" class="form-control" id="tgl_terbit" name="tgl_terbit" placeholder="Tanggal Terbit">
+                <input type="date" class="form-control" id="tgl_awal" name="tgl_awal" placeholder="Tanggal Terbit" required>
+              </div>
+            </td>
+            <td><b>Tanggal Akhir :</b></td>
+            <td>
+              <div class="form-group">
+                <input type="date" class="form-control" id="tgl_akhir" name="tgl_akhir" placeholder="Tanggal Terbit" required>
               </div>
             </td>
 

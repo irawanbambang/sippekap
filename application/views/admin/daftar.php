@@ -16,7 +16,7 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="<?php echo base_url('admin/cetak_tanggal') ?>">Tanggal/Bulan/Tahun</a>
                     <a class="dropdown-item" href="<?php echo base_url('admin/cetak_bulan') ?>">Bulan/Tahun</a>
-                    <a class="dropdown-item" href="#">Tahun</a>
+                    <a class="dropdown-item" href="<?php echo base_url('admin/cetak_tahun') ?>">Tahun</a>
                   </div>
                 </div>
                 <br/>

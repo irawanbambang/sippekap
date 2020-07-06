@@ -27,19 +27,40 @@
 
           } ?> 
 
+                  <!-- Begin Page Content -->
+        <div class="container-fluid">
+
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Form Pendaftaran Perizinan Kapal</h1>
 
 
-          <div class="gropup row">
           <?= validation_errors(); ?>
           <?= form_open_multipart('form/simpan'); ?>
-            <div class="col-md-6 col-xl-12">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">PAS KECIL</h5>
+            <div class="row">
+              <div class="col-6">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="newSubMenuModalLabel">IDENTITAS PEMILIK KAPAL</h5>
+                  </div>
+                    <div class="modal-body">
+                    <div class="form-group">
+                    <h7>KTP Asli</h7>
+                    <br>
+                       <input type="text" class="form-control" value="<?= $asal_ktp ?>">
+                    </div>
+                    <div class="form-group">
+                    <h7>NIK Pemilik</h7>
+                        <input type="text" class="form-control" placeholder="Entri NIK....." value="<?= $nik ?>" disabled>
+                         <input type="hidden" class="form-control" id="nik" name="nik" placeholder="Entri NIK....." value="<?= $this->session->userdata('nik'); ?>">
+                    </div>
+                  </div>
                 </div>
-                  <div class="modal-body">
+                <br/>
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">PAS KECIL</h5>
+                  </div>
+                    <div class="modal-body">
                     <div class="form-group">
                     <h7>No. Pas Kecil</h7>
                     <br>
@@ -58,38 +79,45 @@
                         <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="Masukkan Penerbit">
                     </div>
                   </div>
-              </div>
-            </div>
-            </br>
-
-            <div class="col-xl-5 col-lg-7">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="newSubMenuModalLabel">IDENTITAS PEMILIK KAPAL</h5>
                 </div>
-                  <div class="modal-body">
+                <br/>
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Upload Berkas (Jpg, Jpeg, Png)<text>ukuran file maksimal 10MB</text></h5>
+                  </div>
+                    <div class="modal-body">
                     <div class="form-group">
-                    <h7>KTP Asli</h7>
-                    <br>
-                       <input type="text" class="form-control" value="<?= $asal_ktp ?>">
+                    <h7>Fotokopi KTP</h7>
+                      <div class="col-md-4">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="upload_pas" name="upload_pas">
+                          <label class="custom-file-label" for="upload_pas">Choose file</label>
+                      </div>
+                        <img src="<?= base_url()?>assets/upload_image/<?= $upload_ktp ?>" class="card-img">
+                      </div>
                     </div>
                     <div class="form-group">
-                    <h7>NIK Pemilik</h7>
-                        <input type="text" class="form-control" placeholder="Entri NIK....." value="<?= $nik ?>" disabled>
-                         <input type="hidden" class="form-control" id="nik" name="nik" placeholder="Entri NIK....." value="<?= $this->session->userdata('nik'); ?>">
+                    <h7>Fotokopi Pas Kecil</h7>
+                      <div class="col-md-4">
+                        <img src="<?= base_url()?>assets/upload_image/<?= $upload_pas ?>" class="card-img">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                    <h7>Fotokopi Surat Kedatangan Kapal</h7>
+                      <div class="col-md-4">
+                        <img src="<?= base_url()?>assets/upload_image/<?= $upload_kapal_datang ?>" class="card-img">
+                      </div>
                     </div>
                   </div>
-              </div>
-            </div>
-            </br>
-
-
-            <div class="col-xl-7 col-lg-7">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">IDENTITAS KAPAL</h5>
                 </div>
-                  <div class="modal-body">
+                </br>
+              </div>
+              <div class="col-6">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">IDENTITAS KAPAL</h5>
+                  </div>
+                    <div class="modal-body">
                     <div class="form-group">
                     <h7>Nama Kapal</h7>
                       <input type="text" class="form-control" id="nama_kapal" name="nama_kapal" value="<?= $nama_kapal ?>">
@@ -161,59 +189,17 @@
                         </div>
                     </div>
                   </div>
-              </div>
-              </br>
-
-
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Upload Berkas (Jpg, Jpeg, Png)<text>ukuran file maksimal 10MB</text></h5>
                 </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                    <h7>Fotokopi KTP</h7>
-                      <div class="col-md-4">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="upload_pas" name="upload_pas">
-                          <label class="custom-file-label" for="upload_pas">Choose file</label>
-                      </div>
-                        <img src="<?= base_url()?>assets/upload_image/<?= $upload_ktp ?>" class="card-img">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                    <h7>Fotokopi Pas Kecil</h7>
-                      <div class="col-md-4">
-                        <img src="<?= base_url()?>assets/upload_image/<?= $upload_pas ?>" class="card-img">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                    <h7>Fotokopi Surat Kedatangan Kapal</h7>
-                      <div class="col-md-4">
-                        <img src="<?= base_url()?>assets/upload_image/<?= $upload_kapal_datang ?>" class="card-img">
-                      </div>
-                    </div>
-                  </div>
-              </div>
-              </br>
-              <div>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-success">Ubah</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            <br/>
+            <br/>
           </form>
-          </div>
         </div>
         <!-- /.container-fluid -->
-        <script>
-          $('#jenis_alat').change(function(){
-            let lainnya = $('#jenis_alat').val();
-            console.log(lainnya);
-            if(lainnya == 'lainnya') {
-              $('#jenis_lain').attr('hidden', false);
-            } else {
-              $('#jenis_lain').attr('hidden', true);
-            }
-          });
-        </script>
 
         <script>
           $('#bahan').change(function(){
@@ -223,6 +209,18 @@
               $('#bahan_lain').attr('hidden', false);
             } else {
               $('#bahan_lain').attr('hidden', true);
+            }
+          });
+        </script>
+
+        <script>
+          $('#jenis_alat').change(function(){
+            let lainnya = $('#jenis_alat').val();
+            console.log(lainnya);
+            if(lainnya == 'lainnya') {
+              $('#jenis_lain').attr('hidden', false);
+            } else {
+              $('#jenis_lain').attr('hidden', true);
             }
           });
         </script>

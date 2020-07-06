@@ -1,4 +1,4 @@
-<?= form_open_multipart('admin/bulan'); ?>
+<?= form_open_multipart('admin/tahun'); ?>
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
@@ -9,28 +9,9 @@
           <div class="card mb-3 col-lg-6">
             <p class="mb-1"><i class="fas fa-fw fa-filter"></i>&nbsp<b>Filter</b></p>
             <hr>
-            <td><b>Bulan :</b></td>
+            <td><b>Tahun :</b></td>
             <div class="row">
-            <div class="col-lg-6">
-            <td>  
-              <select class="form-control form-control-user" name="bulan" id="bulan" required>
-                <option value="1">Januari</option>  
-                <option value="2">Februari</option>  
-                <option value="3">Maret</option>  
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-              </select>
-            </td>
-            </div>
-
-              <div class="col-lg-6">
+             <div class="col-lg-12">
               <td>
               <select class="form-control form-control-user" name="tahun" id="tahun" required>
                 <?php 

@@ -19,6 +19,7 @@
             <h7>Nama</h7>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nama" value="<?= $name ?>"disabled>
                 <input type="hidden" class="form-control" id="name" name="name" placeholder="Nama" value="<?= $name ?>">
+                <input type="hidden" class="form-control" id="id" name="id" placeholder="Nama" value="<?= $id ?>">
             </div>
             <div class="form-group">
             <h7>Email</h7>
