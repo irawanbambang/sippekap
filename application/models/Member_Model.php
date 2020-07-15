@@ -9,7 +9,7 @@ class Member_Model extends CI_MOdel
 	}
 	public function getnomor()
 	{
-		$this->db->order_by('id_ip', 'desc');
+		$this->db->order_by('id', 'desc');
 		$this->db->limit(1);
 		return $this->db->get('tb_identitas_pemilik')->result_array();
 	}
@@ -17,19 +17,20 @@ class Member_Model extends CI_MOdel
 	{
 		$this->db->insert('tb_identitas_pemilik', $data);
 	}
-	public function cari($id_ip)
+	public function cari($id)
 	{
-		$this->db->where('id_ip = "'.$id_ip.'"');
+		$this->db->where('tb_identitas_pemilik.id = "'.$id.'"');
+		$this->db->join('user','user.id = tb_identitas_pemilik.id_user');
 		return $this->db->get('tb_identitas_pemilik')->result_array();
 	}
-	public function ubah($id_ip,$data)
+	public function ubah($id,$data)
 	{
-		$this->db->where('id_ip = "'.$id_ip.'"');
+		$this->db->where('id = "'.$id.'"');
 		$this->db->update('tb_identitas_pemilik', $data);
 	}
-	public function hapus_member($id_ip)
+	public function hapus_member($id)
 	{
-		$this->db->where('id_ip = "'.$id_ip.'"');
+		$this->db->where('id = "'.$id.'"');
 		$this->db->delete('tb_identitas_pemilik');
 	}
 }

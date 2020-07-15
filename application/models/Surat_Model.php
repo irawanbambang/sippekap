@@ -65,4 +65,9 @@ class Surat_Model extends CI_MOdel
 		$this->db->where('id_kp = "'.$id_kp.'"');
 		$this->db->delete('tb_surat');
 	}
+	public function upload_surat($id_kp,$data)
+	{
+		$this->db->where('id_kp = "'.$id_kp.'"');
+		$this->db->update('tb_surat', $data);
+	}
 }

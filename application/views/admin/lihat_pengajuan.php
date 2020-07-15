@@ -191,7 +191,7 @@
                  ?>
             <a href="" data-toggle="modal" data-target="#newSubMenuModal" onclick="verifikasi('<?= $id_kp ?>')" type="button" class="btn btn-success">Verifikasi</a>
             <!-- <a href="<?= base_url('index.php') ?>admin/tolak/<?= $id_kp ?>" type="button" class="btn btn-secondary">Tolak</a> -->
-            <a href="" data-toggle="modal" data-target="#newSubMenuModalTolak" onclick="tolak('<?= $id_kp ?>')" type="button" class="btn btn-secondary">Tolak</a>
+            <button onclick="tolak('<?= $id_kp ?>')" type="button" class="btn btn-secondary">Tolak</button>
           <?php } ?>
             </div>
             <br/>
@@ -226,36 +226,16 @@
       </div>
       <!-- End of Main Content -->
 
-      <!-- Modal Tolak -->
-<div class="modal fade" id="newSubMenuModalTolak" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="newSubMenuModalLabel">Tambah Data Surat</h5>
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> -->
-      </div>
-      <form action="<?= base_url('index.php') ?>admin/tolak/<?= $id_kp ?>" method="post">
-        <div class="modal-body">
-          <input type="hidden" name="id_kp_tolak" value="<?= $id_kp ?>">
-          <div class="form-group">
-              <textarea class="form-control" id="catatan" name="catatan" placeholder="Catatan"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 
 <script>
   function verifikasi(id){
     document.getElementById('id').value=id;
+  }
+
+  function tolak(id){
+    $('[name="id_kp"]').val(id);
+    $('#newSubMenuModalTolak').modal('show');
+    $('.modal-title').text('Update Permohonan');
   }
 </script>
         
@@ -291,6 +271,32 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
           <button type="submit" class="btn btn-primary">Kirim</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tolak -->
+<div class="modal fade" id="newSubMenuModalTolak" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newSubMenuModalLabel">Tambah Data Surat</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <form action="<?= base_url('admin/tolak'); ?>" method="post">
+        <div class="modal-body">
+          <input type="hidden" name="id_kp" value="">
+          <div class="form-group">
+              <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Catatan"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
         </div>
       </form>
     </div>

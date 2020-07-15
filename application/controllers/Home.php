@@ -12,16 +12,22 @@ class Home extends CI_Controller
 	
 	public function index()
 	{
+		$this->load->model('Dasboard_Model','dm');
+
 		$data['title'] = 'Dashboard';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-		$data['t_pengajuan'] = $this->dm->ambilDataPengajuan();
+		$data['t_pengajuan'] 	= $this->dm->ambilDataPengajuan();
+		$data['t_perizinan'] 	= $this->dm->ambilDataPerizinan();
+		$data['t_pemohon'] 		= $this->dm->ambilDataPemohon();
 
+		$data['c_kota'] 		= $this->dm->ambilKotaChart()->row_array();
+		$data['c_jekel'] 		= $this->dm->ambilJekelChart()->row_array();
 		
 		$this->load->view('tamplates/header', $data);
 		$this->load->view('tamplates/sidebar', $data);
 		$this->load->view('tamplates/topbar', $data);
-		$this->load->view('dashboard/index', $data);
+		$this->load->view('admin/index', $data);
 		$this->load->view('tamplates/footer');
 	}
 }

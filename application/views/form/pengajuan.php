@@ -33,20 +33,20 @@
                       <td><?= $p['status'] ?></td>
                       <td>
                         <?php if ($p['status'] == 'menunggu'|| $p['status'] == 'tolak'){ ?>
-                        <a href="<?= base_url('index.php/') ?>form/edit/<?= $p['id_kp'] ?>" class="btn btn-primary btn-box btn-sm">
+                        <a href="<?= base_url('index.php/') ?>form/edit/<?= $p['id_kp'] ?>" class="btn btn-primary btn-box btn-sm" title="Ubah">
                           <i class="fas fa-fw fa-edit"></i>
                         </a>
 
-                        <a href="<?= base_url('index.php/') ?>form/usulkan/<?= $p['id_kp'] ?>" onclick="return confirm('Yakin ingin mengusulkan data ini?')" class="btn btn-info btn-box btn-sm"><i class="fas fa-fw fa-hand-holding"></i>Usulkan</i>
+                        <a href="<?= base_url('index.php/') ?>form/usulkan/<?= $p['id_kp'] ?>" onclick="return confirm('Yakin ingin mengusulkan data ini?')" class="btn btn-info btn-box btn-sm" title="Usulkan"><i class="fas fa-fw fa-hand-holding"></i></i>
                         </a>
                         <?php } ?>
 
                         <?php if ($p['status'] == 'tolak'){ ?>
-                        <a type="button" class="fas fa-fw fa-envelope" ></a>
+                        <a href="<?= base_url('index.php/') ?>form/tolak/<?= $p['id_kp'] ?>" data-toggle="modal" data-target="#newSubMenuModalTolak" class="btn btn-secondary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-envelope"></i> </a>
                         <?php } ?>
 
                         <?php if ($p['status'] == 'terima' || $p['status'] == 'stempel'){ ?>
-                        <a href="<?= base_url('index.php/') ?>form/cetak/<?= $p['id_kp'] ?>" onclick="return confirm('Yakin ingin mengusulkan data ini?')" class="btn btn-success btn-box btn-sm">
+                        <a href="<?= base_url('Form/pdf') ?>" class="btn btn-success btn-box btn-sm" title="cetak">
                           <i class="fas fa-fw fa-print"></i>
                         </a>
 
@@ -84,24 +84,27 @@
       </div>
       <!-- End of Main Content -->
 
-<!-- Modal -->
-  <div id="myModal" class="modal fade" role="dialog" tabindex="-1">
-    <div class="modal-dialog">
-      <!-- konten modal-->
-      <div class="modal-content">
-        <!-- heading modal -->
-        <div class="modal-header">
-          <h4 class="modal-title">Pesan Kesalahan Pendaftaran !</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <!-- body modal -->
-        <div class="modal-body">
-          <p></p>
-        </div>
-        <!-- footer modal -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-        </div>
+<!-- Modal Tolak -->
+<div class="modal" id="newSubMenuModalTolak" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newSubMenuModalLabel">Pesan</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
       </div>
+      <form action="<?= base_url('form/tolak'); ?>" method="post">
+        <div class="modal-body">
+          <input type="text" name="id_kp" value="<?= $this->session->userdata('id_kp'); ?>">
+          <div class="form-group">
+              <textarea class="form-control" id="keterangan" name="keterangan" value="<?= $this->session->userdata('keterangan'); ?>"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>

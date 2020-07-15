@@ -36,13 +36,13 @@
                         <td><span class="badge badge-danger">Belum</span></td>
                       <?php } ?>
                       <td>
-                          <a href="" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
+                          <a href="<?php echo base_url('Admin/lihat_surat') ?>" class="btn btn-warning btn-box btn-sm" title="Lihat"><i class="fas fa-fw fa-eye"></i>
                           </a>
                           <?php if($ps['status'] != 'stempel') { ?>
-                          <a href="" class="btn btn-primary btn-box btn-sm"><i class="fas fa-fw fa-cloud-upload-alt"></i>
-                          </a>
-                          <a href="" class="btn btn-success btn-box btn-sm"><i class="fas fa-fw fa-print"></i>
-                          </a>
+                            <a href="<?= base_url('index.php/') ?>admin/simpan_surat/" data-toggle="modal" data-target="#newSubMenuModalSurat" class="btn btn-primary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-cloud-upload-alt"></i>
+                            </a>
+                            <a href="<?php echo base_url('Admin/pdf') ?>" class="btn btn-success btn-box btn-sm" title="Download"><i class="fas fa-fw fa-print"></i>
+                            </a>
                           <?php } ?>
                       </td>
                     </tr>
@@ -76,34 +76,27 @@
       </div>
       <!-- End of Main Content -->
 
-<!-- Modal -->
-<div class="modal fade" id="newSubMenuModal" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
+<!-- Modal Tolak -->
+<div class="modal" id="newSubMenuModalSurat" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="newSubMenuModalLabel">Add New Submenu</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="newSubMenuModalLabel">Upload Surat</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button> -->
       </div>
-      <form action="<?= base_url('menu/submenu'); ?>" method="post">
+      <form action="<?= base_url('admin/simpan_surat'); ?>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
+          <!-- <input type="text" name="id_kp" value="<?= $this->session->userdata('id_kp'); ?>"> -->
           <div class="form-group">
-             <input type="text" class="form-control" id="title" name="title" placeholder="Nomor Surat">
-          </div>
-          <div class="form-group">
-              <input type="date" class="form-control" id="url" name="url" placeholder="Tanggal Terbit">
-          </div>
-          <div class="form-group">
-              <input type="date" class="form-control" id="url" name="url" placeholder="Tanggal Kadaluarsa">
-          </div>
-          <div class="form-group">
-              <input type="text" class="form-control" id="icon" name="icon" placeholder="Catatan">
+              <input type="file" class="custom-file-input" id="upload_surat" name="upload_surat" required>
+              <label class="custom-file-label" for="upload_surat">Pilih File</label>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Upload</button>
         </div>
       </form>
     </div>

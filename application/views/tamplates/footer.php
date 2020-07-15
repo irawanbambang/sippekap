@@ -31,7 +31,7 @@
         </div>
         <div class="modal-body">Tekan "Logout" bila anda ingin keluar dari Sistem</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
           <a class="btn btn-primary" href="<?= base_url('auth/logout/'); ?>">Logout</a>
         </div>
       </div>

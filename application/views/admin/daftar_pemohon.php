@@ -15,7 +15,7 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
+                  <thead class="thead-dark">
                     <tr>
                       <th>NIK</th>
                       <th>NAMA</th>
@@ -35,7 +35,7 @@
                         <!-- <a href="<?= base_url('index.php/') ?>admin/hapus_pemohon/<?= $key['nik'] ?>" onclick="return confirm('Yakin ingin menghapus data ini?')" class="btn btn-danger btn-box btn-sm">
                         <i class="fas fa-fw fa-trash-alt"></i>
                         </a> -->
-                        <a href="<?= base_url('admin/detail_data_pemohon'); ?>" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
+                        <a href="<?= base_url('admin/detail_data_pemohon/'.$key['id']); ?>" class="btn btn-warning btn-box btn-sm" title="lihat"><i class="fas fa-fw fa-eye"></i>
                         </a>
                       </td>
                     </tr>

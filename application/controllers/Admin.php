@@ -21,8 +21,12 @@ class Admin extends CI_Controller
 		$data['title'] = 'Dashboard';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-		$data['t_pengajuan'] = $this->dm->ambilDataPengajuan();
+		$data['t_pengajuan'] 	= $this->dm->ambilDataPengajuan();
+		$data['t_perizinan'] 	= $this->dm->ambilDataPerizinan();
+		$data['t_pemohon'] 		= $this->dm->ambilDataPemohon();
 
+		$data['c_kota'] 		= $this->dm->ambilKotaChart()->row_array();
+		$data['c_jekel'] 		= $this->dm->ambilJekelChart()->row_array();
 		
 		$this->load->view('tamplates/header', $data);
 		$this->load->view('tamplates/sidebar', $data);
@@ -135,12 +139,13 @@ class Admin extends CI_Controller
 		$this->load->view('tamplates/footer');
 	}
 
-	public function detail_data_pemohon()
+	public function detail_data_pemohon($id)
 	{
 		$data['title'] = 'Detail Data Pemohon';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-		$data['data_pemohon'] = $this->Member_Model->getAll();
+
+		$data['data_pemohon'] = $this->Member_Model->cari($id);
 		
 		$this->load->view('tamplates/header', $data);
 		$this->load->view('tamplates/sidebar', $data);
@@ -190,10 +195,10 @@ class Admin extends CI_Controller
 		$data = array(
 						'status' => 'verifikasi'
 		 );
-		$this->Form_Model->ubah($this->input->post('id'), $data);
+		$this->Form_Model->ubah($this->input->post('id_kp'), $data);
 
 		$data = array(
-						'id_kp' => $this->input->post('id'),
+						'id_kp' => $this->input->post('id_kp'),
 						'no_surat' => $this->input->post('no_surat'),
 						'tgl_terbit' => date('Y-m-d'),
 						'tgl_kadaluwarsa' => date('Y-m-d'),
@@ -204,19 +209,14 @@ class Admin extends CI_Controller
 		redirect('admin/daftar');
 	}
 
-	public function tolak($id_kp)
+	public function tolak()
 	{
-		$data = array(
-			'status' => 'tolak'
-		 );
-
 		$tolak = array(
-			'id_kp'  => $this->input->post('id_kp_tolak'),
-			'pesan' => $this->input->post('catatan')
+			'status' => 'tolak',
+			'keterangan' => $this->input->post('keterangan')
 		 );		
 
-		$this->Form_Model->ubah($id_kp, $data);
-		$this->db->insert('tb_surat_tolak', $tolak);
+		$this->Form_Model->ubah($this->input->post('id_kp'), $tolak);
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
 		redirect('admin/daftar');
 	}
@@ -493,9 +493,9 @@ class Admin extends CI_Controller
 
 		$cetak->getActiveSheet()->getColumnDimension('A')->setWidth(5);
         $cetak->getActiveSheet()->getColumnDimension('B')->setWidth(25);
-        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(20);
-        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(15);
-        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(15);
         $cetak->getActiveSheet()->getColumnDimension('F')->setWidth(20);
         $cetak->getActiveSheet()->getColumnDimension('G')->setWidth(20);
         $cetak->getActiveSheet()->getColumnDimension('H')->setWidth(30);
@@ -649,9 +649,9 @@ class Admin extends CI_Controller
 
 		$cetak->getActiveSheet()->getColumnDimension('A')->setWidth(5);
         $cetak->getActiveSheet()->getColumnDimension('B')->setWidth(25);
-        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(20);
-        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(15);
-        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(15);
         $cetak->getActiveSheet()->getColumnDimension('F')->setWidth(20);
         $cetak->getActiveSheet()->getColumnDimension('G')->setWidth(20);
         $cetak->getActiveSheet()->getColumnDimension('H')->setWidth(30);
@@ -805,9 +805,9 @@ public function tahun()
 
 		$cetak->getActiveSheet()->getColumnDimension('A')->setWidth(5);
         $cetak->getActiveSheet()->getColumnDimension('B')->setWidth(25);
-        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(20);
-        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(15);
-        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $cetak->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+        $cetak->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        $cetak->getActiveSheet()->getColumnDimension('E')->setWidth(15);
         $cetak->getActiveSheet()->getColumnDimension('F')->setWidth(20);
         $cetak->getActiveSheet()->getColumnDimension('G')->setWidth(20);
         $cetak->getActiveSheet()->getColumnDimension('H')->setWidth(30);
@@ -839,7 +839,109 @@ public function tahun()
 		
 
 	}
-	
 
+
+	// public function pdf(){
+
+	// 	include APPPATH.'third_party\dompdf\dompdf_config.inc.php';
+	// 	$this->load->library('dompdf_gen');
+
+	// 	$data['surat'] = $this->Surat_Model->getAll('tb_surat');
+	// 	$results = array();
+
+	// 	$this->load->view('admin/pdf/surat_perizinan',$data);
+
+	// 	$paper_size = 'A4';
+	// 	$orientation = 'potret';
+	// 	$html = $this->output->get_output();
+	// 	$this->dompdf->set_paper($paper_size, $orientation);
+
+	// 	$this->dompdf->load_html($html);
+	// 	$this->dompdf->render();
+	// 	$this->dompdf->stream("surat_perizinan_kapal.pdf", array('Attachment' =>0));
+	// }
+
+	public function lihat_surat()
+	{
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		
+		$this->load->view('admin/pdf/surat_perizinan', $data);
+	}
+
+	public function pdf() {
+        // $orders = $this->order_model->get_all();
+        $tanggal = date('d-m-Y');
+ 
+        $pdf = new \TCPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('', 'B', 20);
+        $pdf->Cell(115, 0, "Laporan Order - ".$tanggal, 0, 1, 'L');
+        $pdf->SetAutoPageBreak(true, 0);
+ 
+        // Add Header
+        // $pdf->Ln(10); Untuk menambah garis
+        $pdf->SetFont('', 'B', 12);
+        $pdf->Cell(10, 8, "KEPEMILIKAN", 1, 0, 'C');
+        $pdf->Cell(55, 8, "REFERENSI", 1, 0, 'C');
+        $pdf->SetFont('', '', 12);
+        // foreach($orders->result_array() as $k => $order) {
+        //     $this->addRow($pdf, $k+1, $order);
+        // }
+        $tanggal = date('d-m-Y');
+        $pdf->Output('Laporan Order - '.$tanggal.'.pdf'); 
+    }
+ 
+    // private function addRow($pdf, $no, $order) {
+    //     $pdf->Cell(10, 8, $no, 1, 0, 'C');
+    //     $pdf->Cell(55, 8, $order['product'], 1, 0, '');
+    //     $pdf->Cell(35, 8, date('d-m-Y', strtotime($order['tanggal'])), 1, 0, 'C');
+    //     $pdf->Cell(35, 8, $order['jumlah'], 1, 0, 'C');
+    //     $pdf->Cell(50, 8, "Rp. ".number_format($order['total'], 2, ',' , '.'), 1, 1, 'L');
+    // }
+
+    public function cetakHtml()
+    {
+    	$this->load->view('tes/cetak');
+    }
+	
+    public function simpan_surat()
+	{
+		$upload_surat = $_FILES['upload_surat']['name'];
+		if ($upload_surat) {
+			$config['allowed_types'] = 'gif|jpeg|jpg|png';
+		    $config['max_size']     = '10240';
+		    $namafoto=date('ymdhis');
+		    $config['file_name']	= $namafoto;
+		    $config['upload_path'] = './assets/upload_image/';
+
+		    $this->load->library('upload', $config);
+
+		    if ($this->upload->do_upload('upload_surat')) {
+		        $nama_foto_upload_surat = $this->upload->data('file_name');
+		    } else {
+		        echo $this->upload->display_errors();
+		    }
+		} else {
+		 $nama_foto_upload_surat = '';
+		}
+
+	 	$data = array(
+						'upload_surat' => $nama_foto_upload_surat
+		);
+		$this->Surat_Model->upload_surat($this->input->post('id_kp'), $data);
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menambah Pengajuan!</div>');
+		redirect('admin/surat');
+				// }
+				
+	}
+
+	// $tolak = array(
+	// 		'status' => 'tolak',
+	// 		'keterangan' => $this->input->post('keterangan')
+	// 	 );		
+
+	// 	$this->Form_Model->ubah($this->input->post('id_kp'), $tolak);
+	// 	$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
+	// 	redirect('admin/daftar');
 
 }

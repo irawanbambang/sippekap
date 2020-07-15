@@ -37,7 +37,8 @@
                             <button class="badge badge-primary btn-xs"><li class="fa fa-trash-o"></li>Pengesahan</button>
                           </a>
                           <?php } ?>
-                        <a href="<?= base_url('index.php/') ?>kadin/pengajuan/detailsurat/<?= $ps['id_kp'] ?>" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
+                        </a>
+                        <a href="<?= base_url('index.php/') ?>kadin/detailsurat/<?= $ps['id_kp'] ?>" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
                         </a>
                       </td>
                     </tr>

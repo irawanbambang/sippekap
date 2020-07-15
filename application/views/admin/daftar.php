@@ -10,7 +10,7 @@
           <div class="card shadow mb-4">
             <div class="card-body">
               <div class="dropdown">
-                  <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="cetak laporan">
                     <i class="fa fa-download"></i> Cetak Laporan
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -50,7 +50,7 @@
                         </a>
                         <?php } ?>
                         <?php if ($p['status'] != 'disahkan'){ ?>
-                        <a href="<?= base_url('index.php/admin/lihat_pengajuan/') . $p['id_kp'] ?>" class="btn btn-warning btn-box btn-sm"><i class="fas fa-fw fa-eye"></i>
+                        <a href="<?= base_url('index.php/admin/lihat_pengajuan/') . $p['id_kp'] ?>" class="btn btn-warning btn-box btn-sm" title="lihat"><i class="fas fa-fw fa-eye"></i>
                         </a>
                         <?php } ?>
                       </td>
