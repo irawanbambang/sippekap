@@ -39,7 +39,7 @@
                           <a href="<?php echo base_url('Admin/lihat_surat') ?>" class="btn btn-warning btn-box btn-sm" title="Lihat"><i class="fas fa-fw fa-eye"></i>
                           </a>
                           <?php if($ps['status'] != 'stempel') { ?>
-                            <a href="<?= base_url('index.php/') ?>admin/simpan_surat/" data-toggle="modal" data-target="#newSubMenuModalSurat" class="btn btn-primary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-cloud-upload-alt"></i>
+                            <a href="" onclick="ambil_idSurat('<?= $ps['id_surat'] ?>')" data-toggle="modal" data-target="#newSubMenuModalSurat" class="btn btn-primary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-cloud-upload-alt"></i>
                             </a>
                             <a href="<?php echo base_url('Admin/pdf') ?>" class="btn btn-success btn-box btn-sm" title="Download"><i class="fas fa-fw fa-print"></i>
                             </a>
@@ -88,7 +88,7 @@
       </div>
       <form action="<?= base_url('admin/simpan_surat'); ?>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
-          <input type="hidden" name="id_kp" value="<?= $this->session->userdata('id_surat'); ?>">
+          <input type="hidden" name="id_surat" id="id_surat" value="0">
           <div class="form-group">
               <input type="file" class="custom-file-input" id="upload_surat" name="upload_surat" required>
               <label class="custom-file-label" for="upload_surat">Pilih File</label>
@@ -102,3 +102,11 @@
     </div>
   </div>
 </div>
+
+<script>
+
+    function ambil_idSurat(id_surat) {
+      $('#id_surat').val(id_surat);
+    }
+
+</script>

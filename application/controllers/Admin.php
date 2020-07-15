@@ -935,7 +935,7 @@ public function tahun()
 	 	$data = array(
 						'upload_surat' => $nama_foto_upload_surat
 		);
-		$this->Surat_Model->upload_surat($this->input->post('id_kp'), $data);
+		$this->Surat_Model->upload_surat($this->input->post('id_surat'), $data);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menambah Pengajuan!</div>');
 		redirect('admin/surat');
 				// }
