@@ -904,6 +904,7 @@ public function tahun()
     	$this->load->view('tes/cetak');
     }
 	
+<<<<<<< HEAD
     public function simpan_surat()
 	{
 		$upload_surat = $_FILES['upload_surat']['name'];
@@ -943,5 +944,16 @@ public function tahun()
 	// 	$this->Form_Model->ubah($this->input->post('id_kp'), $tolak);
 	// 	$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
 	// 	redirect('admin/daftar');
+=======
+	public function tes()
+	{
+		$this->load->model('Dasboard_Model', 'dm');
+
+		$data = $this->dm->ambilJekelChart()->row_array();
+
+		echo json_encode($data);
+		// echo $data['cowok'];
+	}
+>>>>>>> 05e0c4639e50998c201287c6bc8f7d95bc4bae2f
 
 }
