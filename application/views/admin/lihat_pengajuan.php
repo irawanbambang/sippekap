@@ -291,7 +291,7 @@
         <div class="modal-body">
           <input type="hidden" name="id_kp" value="">
           <div class="form-group">
-              <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Catatan"></textarea>
+              <textarea class="form-control" id="pesan" name="pesan" placeholder="Catatan"></textarea>
           </div>
         </div>
         <div class="modal-footer">

@@ -38,4 +38,13 @@ class Form_Model extends CI_MOdel
 		$this->db->where('id_kp = "'.$id_kp.'"');
 		$this->db->update('tb_kapal', $data);
 	}
+	public function ambil_pesan($id)
+    {
+		$this->db->select('*');        
+		$this->db->from('tb_kapal');
+		$this->db->where('id_kp',$id);
+		$query = $this->db->get();
+		 
+		return $query->row();
+    }
 }

@@ -315,9 +315,7 @@ class Form extends CI_Controller
 		$tolak = array(
 			'id_kp' => $this->input->post('id_kp'),
 			'keterangan' => $this->input->post('keterangan')
-		 );		
-
-		$this->Form_Model->ubah($this->input->post('id_kp'), $tolak);
+		 );
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
 		redirect('admin/daftar');
 	}
@@ -344,4 +342,5 @@ class Form extends CI_Controller
         $tanggal = date('d-m-Y');
         $pdf->Output('Laporan Order - '.$tanggal.'.pdf'); 
     }
+    
 }

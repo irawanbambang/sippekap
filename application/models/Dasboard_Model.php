@@ -12,21 +12,16 @@ class Dasboard_Model extends CI_MOdel
 
 	public function ambilDataPerizinan()
 	{
-<<<<<<< HEAD
 		$this->db->from('tb_surat');
-=======
 		$this->db->from('tb_surat_perizinan');
->>>>>>> 05e0c4639e50998c201287c6bc8f7d95bc4bae2f
+
 		return $this->db->count_all_results();
 	}
 
 	public function ambilDataPemohon()
 	{
-<<<<<<< HEAD
 		$this->db->from('tb_identitas_pemilik');
-=======
 		$this->db->from('tb_surat');
->>>>>>> 05e0c4639e50998c201287c6bc8f7d95bc4bae2f
 		return $this->db->count_all_results();
 	}
 

@@ -88,7 +88,7 @@
       </div>
       <form action="<?= base_url('admin/simpan_surat'); ?>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
-          <!-- <input type="text" name="id_kp" value="<?= $this->session->userdata('id_kp'); ?>"> -->
+          <input type="hidden" name="id_kp" value="<?= $this->session->userdata('id_surat'); ?>">
           <div class="form-group">
               <input type="file" class="custom-file-input" id="upload_surat" name="upload_surat" required>
               <label class="custom-file-label" for="upload_surat">Pilih File</label>

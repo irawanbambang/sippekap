@@ -72,11 +72,6 @@
           </div>
 
           <div class="row">
-<<<<<<< HEAD
-              
-=======
-            	
->>>>>>> 05e0c4639e50998c201287c6bc8f7d95bc4bae2f
             <!-- Donut Chart -->
             <div class="col-xl-6 col-lg-7">
               <div class="card shadow mb-4">

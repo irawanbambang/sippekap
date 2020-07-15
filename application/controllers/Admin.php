@@ -213,12 +213,18 @@ class Admin extends CI_Controller
 	{
 		$tolak = array(
 			'status' => 'tolak',
-			'keterangan' => $this->input->post('keterangan')
+			'pesan' => $this->input->post('pesan')
 		 );		
 
 		$this->Form_Model->ubah($this->input->post('id_kp'), $tolak);
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
 		redirect('admin/daftar');
+	}
+
+	public function ambil_pesan($id)
+	{
+	  $data = $this->Form_Model->ambil_pesan($id);
+	      echo json_encode($data);
 	}
 
 	// menu daftar surat perizinan kapal
@@ -904,7 +910,7 @@ public function tahun()
     	$this->load->view('tes/cetak');
     }
 	
-<<<<<<< HEAD
+
     public function simpan_surat()
 	{
 		$upload_surat = $_FILES['upload_surat']['name'];
@@ -944,7 +950,7 @@ public function tahun()
 	// 	$this->Form_Model->ubah($this->input->post('id_kp'), $tolak);
 	// 	$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
 	// 	redirect('admin/daftar');
-=======
+	
 	public function tes()
 	{
 		$this->load->model('Dasboard_Model', 'dm');
@@ -954,6 +960,5 @@ public function tahun()
 		echo json_encode($data);
 		// echo $data['cowok'];
 	}
->>>>>>> 05e0c4639e50998c201287c6bc8f7d95bc4bae2f
 
 }

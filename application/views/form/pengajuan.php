@@ -42,7 +42,7 @@
                         <?php } ?>
 
                         <?php if ($p['status'] == 'tolak'){ ?>
-                        <a href="<?= base_url('index.php/') ?>form/tolak/<?= $p['id_kp'] ?>" data-toggle="modal" data-target="#newSubMenuModalTolak" class="btn btn-secondary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-envelope"></i> </a>
+                        <a href="" onclick="lihat_pesan('<?= $p['id_kp'] ?>')" type="button" data-toggle="modal" data-target="#newSubMenuModalPesa" class="btn btn-secondary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-envelope"></i> </a>
                         <?php } ?>
 
                         <?php if ($p['status'] == 'terima' || $p['status'] == 'stempel'){ ?>
@@ -84,8 +84,8 @@
       </div>
       <!-- End of Main Content -->
 
-<!-- Modal Tolak -->
-<div class="modal" id="newSubMenuModalTolak" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
+<!-- Modal Pesan -->
+<div class="modal" id="newSubMenuModalPesa" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,9 +96,9 @@
       </div>
       <form action="<?= base_url('form/tolak'); ?>" method="post">
         <div class="modal-body">
-          <input type="text" name="id_kp" value="<?= $this->session->userdata('id_kp'); ?>">
+          <input type="hidden" name="id_kp">
           <div class="form-group">
-              <textarea class="form-control" id="keterangan" name="keterangan" value="<?= $this->session->userdata('keterangan'); ?>"></textarea>
+              <textarea class="form-control" id="pesan" name="textarea"></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -108,3 +108,32 @@
     </div>
   </div>
 </div>
+
+<script>
+function lihat_pesan(id)
+{
+    $.ajax({
+        url : "<?php echo site_url('admin/ambil_pesan')?>/" + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+
+            $('[name="id_kp"]').val(data.id_kp);
+            $('[name="pesan"]').val(data.pesan);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+</script>
+<!-- 
+<script>
+function lihat_pesan(id)
+{
+   alert(id);
+}
+</script> -->
