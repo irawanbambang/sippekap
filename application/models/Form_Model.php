@@ -9,7 +9,9 @@ class Form_Model extends CI_MOdel
 	}
 	public function getbynik($nik)
 	{
-		$this->db->from('tb_kapal');
+		$this->db->select('*');
+		$this->db->from('tb_surat as s');
+		$this->db->join('tb_kapal as k', 'k.id_kp = s.id_kp');
 		$this->db->where('nik', $nik);
 		return $this->db->get()->result_array();
 	}

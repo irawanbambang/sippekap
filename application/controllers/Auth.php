@@ -219,18 +219,20 @@ class Auth extends CI_Controller
 		$config =[
 			'protocol'  => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
-			'smtp_user' => 'wawanpkl33@gmail.com',
-			'smtp_pass' => 'piyut a345',
+			'smtp_user' => 'cobat223@gmail.com',
+			'smtp_pass' => 'piyuta345',
 			'smtp_port' => 465,
 			'mailtype'  => 'html',
 			'charset'   => 'utf-8',
-			'newline'   => "\r\n"
+			// 'newline'   => "\r\n"
 		];
 
 		$this->load->library('email', $config);
 		$this->email->initialize($config);
 
-		$this->email->from('wawanpkl33@gmail.com', 'Sistem Pelayanan Perizinan Kapal');
+		$this->email->set_newline("\r\n");
+
+		$this->email->from('cobat223@gmail.com', 'Sistem Pelayanan Perizinan Kapal');
 		$this->email->to($this->input->post('email'));
 
 		if($type == 'verify'){
@@ -325,7 +327,7 @@ class Auth extends CI_Controller
                 $this->_sendEmail($token, 'forgot');
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Please check your email to reset your password!</div>');
-                redirect('auth/forgotPassword');
+                redirect('auth/lupaPassword');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email is not registered or activated!</div>');
                 redirect('auth/lupaPassword');

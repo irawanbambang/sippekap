@@ -319,28 +319,10 @@ class Form extends CI_Controller
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
 		redirect('admin/daftar');
 	}
-
-	public function pdf() {
-        // $orders = $this->order_model->get_all();
-        $tanggal = date('d-m-Y');
- 
-        $pdf = new \TCPDF();
-        $pdf->AddPage();
-        $pdf->SetFont('', 'B', 20);
-        $pdf->Cell(115, 0, "Laporan Order - ".$tanggal, 0, 1, 'L');
-        $pdf->SetAutoPageBreak(true, 0);
- 
-        // Add Header
-        // $pdf->Ln(10); Untuk menambah garis
-        $pdf->SetFont('', 'B', 12);
-        $pdf->Cell(10, 8, "KEPEMILIKAN", 1, 0, 'C');
-        $pdf->Cell(55, 8, "REFERENSI", 1, 0, 'C');
-        $pdf->SetFont('', '', 12);
-        // foreach($orders->result_array() as $k => $order) {
-        //     $this->addRow($pdf, $k+1, $order);
-        // }
-        $tanggal = date('d-m-Y');
-        $pdf->Output('Laporan Order - '.$tanggal.'.pdf'); 
-    }
+	
+	public function download_surat($id_surat) {
+		$data = $this->db->get_where('tb_surat', ['id_surat' => $id_surat])->row_array();
+		force_download('assets/upload_image/'.$data['upload_surat'], NULL);
+	}
     
 }

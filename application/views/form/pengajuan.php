@@ -46,7 +46,7 @@
                         <?php } ?>
 
                         <?php if ($p['status'] == 'terima' || $p['status'] == 'stempel'){ ?>
-                        <a href="<?= base_url('Form/pdf') ?>" class="btn btn-success btn-box btn-sm" title="cetak">
+                        <a href="<?= base_url('Form/download_surat/'.$p["id_surat"]); ?>" class="btn btn-success btn-box btn-sm" title="cetak">
                           <i class="fas fa-fw fa-print"></i>
                         </a>
 
