@@ -935,7 +935,13 @@ public function tahun()
 	 	$data = array(
 						'upload_surat' => $nama_foto_upload_surat
 		);
+
+		$status = array(
+			'status' => 'stempel'
+		);
+
 		$this->Surat_Model->upload_surat($this->input->post('id_surat'), $data);
+		$this->Form_Model->ubah($this->input->post('id_kp'), $status);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menambah Pengajuan!</div>');
 		redirect('admin/surat');
 				// }
