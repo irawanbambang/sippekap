@@ -39,7 +39,7 @@
                           <a href="<?php echo base_url('Admin/lihat_surat') ?>" class="btn btn-warning btn-box btn-sm" title="Lihat"><i class="fas fa-fw fa-eye"></i>
                           </a>
                           <?php if($ps['status'] != 'stempel') { ?>
-                            <a href="" onclick="ambil_idSurat('<?= $ps['id_surat'] ?>,<?= $ps['id_kp'] ?>')" data-toggle="modal" data-target="#newSubMenuModalSurat" class="btn btn-primary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-cloud-upload-alt"></i>
+                            <a href="" onclick="ambil_idSurat('<?= $ps['id_surat'] ?>','<?= $ps['id_kp'] ?>')" data-toggle="modal" data-target="#newSubMenuModalSurat" class="btn btn-primary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-cloud-upload-alt"></i>
                             </a>
                             <a href="<?php echo base_url('Admin/pdf') ?>" class="btn btn-success btn-box btn-sm" title="Download"><i class="fas fa-fw fa-print"></i>
                             </a>
