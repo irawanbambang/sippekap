@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Jul 2020 pada 17.35
+-- Waktu pembuatan: 22 Jul 2020 pada 05.31
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 7.2.12
 
@@ -41,22 +41,17 @@ CREATE TABLE `tb_identitas_pemilik` (
   `kelurahan` varchar(50) NOT NULL,
   `kecamatan` varchar(50) NOT NULL,
   `provinsi` varchar(25) NOT NULL,
-  `kota` varchar(25) NOT NULL,
-  `image` varchar(25) NOT NULL
+  `kota` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_identitas_pemilik`
 --
 
-INSERT INTO `tb_identitas_pemilik` (`id`, `id_user`, `nik`, `nama`, `no_hp`, `jenis_kelamin`, `alamat`, `rt`, `rw`, `kelurahan`, `kecamatan`, `provinsi`, `kota`, `image`) VALUES
-(1, 30, '12546584165213', 'coba test', '085412365478', 'laki-laki', 'Batang', '03', '03', 'Prosel', 'Batang', 'Jawa Tengah', 'Batang', 'default.png'),
-(31, 0, '12347583948217345', 'coba cba', '098765432132', 'Laki-laki', 'Kramat Sari', '05', '13', 'Pasir Kraton Kramat', 'Pekalongan Barat', 'Jawa Tengah', 'Pekalongan', 'default.png'),
-(32, 0, '12347583948217345', 'coba cba', '098767832123', 'Laki-laki', 'Kramat Sari', '05', '13', 'Pasir Kraton Kramat', 'Pekalongan Barat', 'Jawa Tengah', 'Pekalongan', 'default.png'),
-(33, 0, '12347583948217345', 'coba cba', '098767832123', 'Laki-laki', 'Kramat Sari', '05', '13', 'Pasir Kraton Kramat', 'Pekalongan Barat', 'Jawa Tengah', 'Pekalongan', 'default.png'),
-(34, 0, '12347583948217345', 'coba cba', '098767832123', 'Laki-laki', 'Kramat Sari', '05', '13', 'Pasir Kraton Kramat', 'Pekalongan Barat', 'Jawa Tengah', 'Pekalongan', 'default.png'),
-(35, 0, '12347583948217345', 'coba cba', '098767832123', 'Laki-laki', 'Kramat Sari', '05', '13', 'Pasir Kraton Kramat', 'Pekalongan Barat', 'Jawa Tengah', 'Pekalongan', 'default.png'),
-(36, 0, '12347583948217345', 'coba cba', '098767832123', 'Laki-laki', 'Kramat Sari', '05', '13', 'Pasir Kraton Kramat', 'Pekalongan Barat', 'Jawa Tengah', 'Pekalongan', 'default.png');
+INSERT INTO `tb_identitas_pemilik` (`id`, `id_user`, `nik`, `nama`, `no_hp`, `jenis_kelamin`, `alamat`, `rt`, `rw`, `kelurahan`, `kecamatan`, `provinsi`, `kota`) VALUES
+(44, 44, '1234758394821734', 'Admin DKP', '098767832123', 'Laki-laki', 'Jl. WR Supratman No.45', '05', '03', 'Panjang Wetan', 'Pekalongan Utara', 'Jawa Tengah', 'Pekalongan'),
+(45, 45, '1234758394821876', 'Kepala Dinas', '098767832345', 'Laki-laki', 'Perum Buara No. 32', '12', '09', 'Buaran', 'Pekalongan Timur', 'Jawa Tengah', 'Pekalongan'),
+(46, 46, '1254658416521300', 'Coba Test', '098767832678', 'Laki-laki', 'Jl. Ki Mangunsarkoro', '03', '03', 'Proyonanggan Selatan', 'Batang', 'Jawa Tengah', 'Batang');
 
 -- --------------------------------------------------------
 
@@ -96,22 +91,8 @@ CREATE TABLE `tb_kapal` (
 --
 
 INSERT INTO `tb_kapal` (`id_kp`, `no_pas`, `asal_ktp`, `nik`, `tgl_terbit`, `tgl_kadaluwarsa`, `penerbit`, `nama_kapal`, `tanda_selar`, `jenis_alat`, `berat`, `muatan`, `kekuatan`, `merk_mesin`, `no_mesin`, `bahan`, `penangkapan`, `pangkalan`, `anak_buah`, `upload_ktp`, `upload_pas`, `upload_kapal_datang`, `status`, `pesan`) VALUES
-(11, '231/DP03/014/20', 'Kota Pekalongan', '2147483647', '2020-01-02', '2020-01-02', 'Dinas Kelautan dan Perikanan', 'Jaya Makmur', 'Gandrun', '5', 2, 12, 7, 'Nyonai', '6785G57', 'fiber', 'Wilayah Pekalongan', 'Pekalongan', 4, 'Untitled1.png', 'ss1.jpg', 'IMG-20190103-WA', 'stempel', ''),
-(13, '231/DP04/002/20', 'Luar Kota Pekalongan', '2147483647', '2020-01-05', '2020-01-05', 'Dinas Kelautan dan Perikanan', 'Sumber Rejeki', 'Gandrun', '1', 2, 12, 7, 'Nyonai', '6785G56', 'kayu', 'Wilayah Pekalongan', 'Pekalongan', 5, 'Untitled3.png', 'wallpaper.jpg', 'ss2.jpg', 'verifikasi', ''),
-(14, '231/DP05/002/20', 'Luar Kota Pekalongan', '2147483647', '2020-01-05', '2020-01-05', 'Dinas Kelautan dan Perikanan', 'Jaya Aqila', 'krayak', '3', 3, 40, 15, 'Nyonai', '6785G56', 'besi', 'Wilayah Pekalongan', 'Pekalongan', 4, 'Untitled4.png', 'ss3.jpg', 'wallpaper21.jpg', 'tolak', ''),
-(15, '231/DP03/015/20', 'Kota Pekalongan', '2147483647', '2020-01-05', '2020-01-05', 'Dinas Kelautan dan Perikanan', 'Sumber Rejeki', 'krayak', '4', 2, 40, 50, 'Nyonai', '6785G56', 'fiber', 'Wilayah Pekalongan', 'Pekalongan', 7, 'Untitled5.png', 'wallpaper22.jpg', 'IMG-20190103-WA', 'verifikasi', ''),
-(16, '231/DP05/002/20', 'Kota Pekalongan', '2147483647', '2020-01-05', '2020-01-05', 'Dinas Kelautan dan Perikanan', 'Jaya Makmur', 'krayak', '3', 3, 12, 7, 'Nyonai', '6785G56', 'besi', 'Wilayah Pekalongan', 'Pekalongan', 7, '200105082625.png', '200105082625.jpg', '2001050826251.jpg', 'menunggu', ''),
-(17, '231/DP06/002/20', 'Luar Kota Pekalongan', '2147483647', '2020-01-05', '2020-01-05', 'Dinas Kelautan dan Perikanan', 'Jaya Aqila', 'krayak', '3', 2, 34, 15, 'Nyonai', '6785G57', 'fiber', 'Wilayah Pekalongan', 'Pekalongan', 5, '2001050832002.jpg', '200105083200.jpg', '2001050832001.jpg', 'menunggu', ''),
-(18, '123456789', 'Kota Pekalongan', '12546584165213', '2020-06-24', '2020-06-24', 'Dishub Tegal', 'Mekar Jaya', '23', 'pukat_kantong', 3, 25, 125, 'Cargo', '123456', 'besi', 'Kota Pekalongan', 'Kota Pekalongan', 3, '2006240634382.jpg', '200624063438.jpg', '2006240634381.jpg', 'stempel', ''),
-(19, '1234567998', 'Kota Pekalongan', '12546584165213', '2020-06-24', '2020-06-24', 'Dishub Tegal', 'Mekar sejati', '21', 'jaring_angkat', 2, 21, 120, 'Cargo', '123456', 'fiber', 'Kota Pekalongan', 'Kota Pekalongan', 4, '2006240652071.jpg', '200624065207.jpg', '200624065207.png', 'verifikasi', ''),
-(20, '44/555/ss/1234', 'Kota Pekalongan', '12546584165213', '2020-06-28', '2020-06-28', 'Dishub Batang', 'Mekar Klakon', 'Jt07', 'jaring_angkat', 3, 23, 40, 'Sekar', 'b032 kk', 'besi', 'Kota Pekalongan', 'Kota Pekalongan', 3, '2006280453052.jpg', '200628045305.jpg', '2006280453051.jpg', 'stempel', ''),
-(21, '44/555/ss/1245', 'Kota Pekalongan', '12546584165213', '2020-07-04', '2020-07-04', 'Dishub Batang', 'Mekar Sejati', 'Jt08', 'pancing', 2, 25, 40, 'Sekar', 'b032 kk', 'besi', 'Kota Pekalongan', 'Kota Pekalongan', 3, '2007040918232.jpg', '200704091823.jpg', '2007040918231.jpg', 'verifikasi', ''),
-(22, '44/555/ss/1234', 'Luar Kota Pekalongan', '12546584165213', '2020-07-05', '2020-07-05', 'Dishub Batang', 'Mekar Maju', '08kl', 'pancing', 2, 23, 40, 'Toyota', 'AA 654 kk', 'kayu', 'Kota Pekalongan', 'Kota Pekalongan', 2, '2007050440152.jpg', '200705044015.jpg', '2007050440151.jpg', 'verifikasi', ''),
-(23, '44/555/ss/1240', 'Luar Kota Pekalongan', '12546584165213', '2020-07-06', '2020-07-06', 'Dishub Batang', 'Mekar Klakon', '08kl', 'jaring_angkat', 2, 23, 40, 'Toyota', 'AA 654 kk', 'kayu', 'Kota Pekalongan', 'Kota Pekalongan', 2, '2007060447262.jpg', '200706044726.jpg', '2007060447261.jpg', 'tolak', 'Berkas tidak sesuai'),
-(24, 'PK. 202/13/22/U', 'Luar Kota Pekalongan', '12546584165213', '2020-07-08', '2020-07-08', 'Kantor UPP Kelas III Batang', 'KM LANCAR JAYA', 'JTA 5 No 703', 'jaring_insang', 1, 1, 26, 'JIANGFA', '-', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '200708063220.jpeg', '200708063220.jpg', '2007080632201.jpg', 'disahkan', ''),
-(25, '44/555/ss/1240', 'Luar Kota Pekalongan', '12546584165213', '2020-07-13', '2020-07-13', '', 'Mekar Klakon', '08kl', '3', 2, 23, 40, 'Toyota', 'AA 654 kk', 'kayu', 'Kota Pekalongan', 'Kota Pekalongan', 2, '', '', '', 'menunggu', ''),
-(26, '44/555/ss/1240', 'Luar Kota Pekalongan', '12546584165213', '2020-07-13', '2020-07-13', '', 'Mekar Klakon', '08kl', '3', 2, 23, 40, 'Toyota', 'AA 654 kk', 'kayu', 'Kota Pekalongan', 'Kota Pekalongan', 2, '', '', '', 'menunggu', ''),
-(27, '44/555/ss/1240', 'Luar Kota Pekalongan', '12546584165213', '2020-07-15', '2020-07-15', '', 'Mekar Klakon', '08kl', '2', 2, 23, 40, 'Toyota', 'AA 654 kk', 'kayu', 'Kota Pekalongan', 'Kota Pekalongan', 2, '', '', '', 'menunggu', '');
+(1, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-20', '2020-07-20', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM NURSEMI JAYA', 'JTA 4 No. 5', '1', 4, 2, 16, 'NP', '-', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 3, '200720010227.jpg', '200720125840.jpg', '2007201258401.jpg', 'stempel', 'Data identitas kapal dan juga upload gambar tidak sesuai'),
+(2, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-20', '2020-07-20', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'jaring_insang', 3, 23, 30, 'Toyota', 'b032 kk', 'kayu', 'Kota Pekalongan', 'Pelabuhan Perikanan Nusan', 2, '2007200617042.jpg', '200720061704.jpg', '2007200617041.jpg', 'disahkan', '');
 
 -- --------------------------------------------------------
 
@@ -134,15 +115,8 @@ CREATE TABLE `tb_surat` (
 --
 
 INSERT INTO `tb_surat` (`id_surat`, `id_kp`, `no_surat`, `tgl_terbit`, `tgl_kadaluwarsa`, `catatan`, `upload_surat`) VALUES
-(11, 0, '028/SPKPI/DKP/IV/2019', '2020-01-02', '2020-01-02', '-', '200715123622.jpg'),
-(12, 0, '029/SPKPI/DKP/IV/2019', '2020-01-02', '2020-01-02', '-', '200715123622.jpg'),
-(13, 0, '028/SPKPI/DKP/IV/2019', '2020-01-05', '2020-01-05', '-', '200715123622.jpg'),
-(14, 0, '029/SPKPI/DKP/IV/2019', '2020-01-05', '2020-01-05', '-', '200715123622.jpg'),
-(15, 18, '001/SPKPI/DKP/IV/2020', '2020-06-26', '2020-06-26', 'Segera dicek', ''),
-(16, 20, '045/SPKPI/DKP/IV/2020', '2020-07-03', '2020-08-06', '', '200716053436.jpg'),
-(17, 21, 'bb/3654/pkl/0240', '2020-07-04', '2020-07-04', '-', ''),
-(18, 22, 'bb/3654/pkl/0250', '2020-07-05', '2020-07-05', '', ''),
-(19, 24, '076/SPKPI/DKP/X/2020', '2020-07-08', '2020-07-08', '-', '200716033247.jpg');
+(1, 1, '001/SPKPI/DKP/XI/2020', '2020-07-20', '2020-07-20', '-', '200720012054.jpg'),
+(2, 2, '002/SPKPI/DKP/XI/2020', '2020-07-20', '2020-07-20', '-', '');
 
 -- --------------------------------------------------------
 
@@ -178,13 +152,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
-(1, 'Kepala Dinas', 'dkpkotapekalongan@gmail.com', 'default.png', '$2y$10$jEIxuWNDPVo.rL1LHJRAZOiZ4.hRUdhPHginEUZGqRL4XgmdD04D2', 3, 1, 20191209),
-(2, 'Dedi Hadi', 'dedi@yahoo.com', 'default.png', '$2y$10$wZIuYN.gsUsqNBXUWRSOeuSd65BCKMyPLg3F4h8F8oy0bzTtT3lS6', 1, 1, 20191201),
-(4, 'Hendri Purwanto', 'hendrip@gmail.com', 'default.png', '', 1, 1, 2019),
-(10, 'Admin', 'admindkp@gmail.com', 'default.png', '$2y$10$jEIxuWNDPVo.rL1LHJRAZOiZ4.hRUdhPHginEUZGqRL4XgmdD04D2', 1, 1, 1577333190),
-(28, 'piyut', 'piyut.klasik@yahoo.com', 'default.png', '', 3, 0, 1577781999),
-(30, 'Coba Test', 'wawanbatang93@gmail.com', 'default.png', '$2y$10$ww8OhcLZmIF9eoXT.6ypk.7sHjULbrA/uHxUxwK6X.9tOOcZOam62', 2, 1, 1577781999),
-(36, 'coba cba', 'nurilmuslichin16@gmail.com', 'default.png', '$2y$10$WGZI9drNbIKmbyirD5oGquMELNXpKht3MYb0Nv6.gzYL1rbmt4hqm', 2, 0, 1594910432);
+(44, 'Admin DKP', 'perizinanpetugas@gmail.com', 'Lighthouse.jpg', '$2y$10$pL4nwshOCakAjMXoawS7P.c9lCVHQ.2b6DRDnYDRAS3QIA5V8tr7G', 1, 1, 1595169424),
+(45, 'Kepala Dinas', 'dkelautandanperikanan@gmail.com', 'Lighthouse.jpg', '$2y$10$yecHeIMwnaYx0Q1M7FeMSeekU/4bjPdr9Gadx6giIRU/3OX0oCfvy', 3, 1, 1595170101),
+(46, 'Coba Test', 'wawanpkl33@gmail.com', 'Tulips.jpg', '$2y$10$3wRg166qpsuKJXrDhBoRFeoprqim6Rnrpu8iDRJYX10G0bSt1UYt6', 2, 1, 1595196330);
 
 -- --------------------------------------------------------
 
@@ -281,16 +251,16 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 (3, 2, 'Edit Profile', 'user/edit', 'fas fa-fw fa-user-edit', 1),
 (4, 3, 'Menu Management', 'menu', 'fas fa-fw fa-folder', 1),
 (5, 3, 'Submenu Management', 'menu/submenu', 'fas fa-fw fa-folder-open', 1),
-(7, 1, 'Role', 'admin/role', 'fas fa-fw fa-user-tie\"', 1),
+(7, 1, 'Daftar Pengajuan', 'admin/daftar', 'fas fa-fw fa-list-ul', 1),
 (8, 2, 'Change Password', 'user/changepassword', 'fas fa-fw fa-key', 1),
 (9, 4, 'Form Pendaftaran', 'form/pendaftaran', 'fas fa-fw fa-pencil-alt', 1),
 (10, 4, 'Data Yang Diajuan', 'form/pengajuan', 'far fa-fw fa-folder-open', 1),
 (11, 5, 'Daftar Pengesahan', 'kadin/pengajuan', 'fas fa-fw fa-server', 1),
-(12, 1, 'Daftar Pengajuan', 'admin/daftar', 'fas fa-fw fa-list-ul', 1),
-(13, 1, 'Daftar Surat Perizinan Kapal', 'admin/surat', 'fas fa-fw fa-clipboard-list', 1),
-(14, 6, 'Identitas Member', 'member', 'fas fa-fw fa-key', 1),
-(15, 1, 'Daftar User', 'admin/daftar_user', 'fas fa-fw fa-key', 1),
-(16, 1, 'Daftar Pemohon', 'admin/daftar_pemohon', 'fas fa-fw fa-clipboard-list', 1),
+(12, 1, 'Daftar Surat Perizinan Kapal', 'admin/surat', 'fas fa-fw fa-clipboard-list', 1),
+(13, 1, 'Daftar User', 'admin/daftar_user', 'fas fa-fw fa-key', 1),
+(14, 6, 'Identitas Member', 'user', 'fas fa-fw fa-key', 1),
+(15, 1, 'Daftar Pemohon', 'admin/daftar_pemohon', 'fas fa-fw fa-clipboard-list', 1),
+(16, 1, 'Role', 'admin/role', 'fas fa-fw fa-user-tie\"', 1),
 (17, 7, 'Dashboard', 'home', 'fas fa-fw fa-university', 1);
 
 -- --------------------------------------------------------
@@ -338,7 +308,18 @@ INSERT INTO `user_token` (`id`, `email`, `token`, `date_created`) VALUES
 (32, 'wawanbatang93@gmail.com', 'uhvrP9LA9GImR74hTEvaBio9AVUcF7EkdxR8w5chSAo=', 1594910896),
 (33, 'wawanbatang93@gmail.com', 'MYHkM3KrVsQ8PzWUtjG3l/w/TnVtfeP690w51+EsL/Y=', 1594911029),
 (34, 'wawanbatang93@gmail.com', 'BoXTyU0r49P65iYqXq1+Q7VOxGFiNN3XkrHzJws+8Y0=', 1594913406),
-(35, 'wawanbatang93@gmail.com', 'F2DF0RrYnFnoTtnZ+/j83tTfnpW8dI6DNfos6mldEis=', 1594913474);
+(35, 'wawanbatang93@gmail.com', 'F2DF0RrYnFnoTtnZ+/j83tTfnpW8dI6DNfos6mldEis=', 1594913474),
+(38, 'wawanbatang93@gmail.com', 'TGexqvu+cIR2dNr/WlmUbGN2gsymcHEirJlZEkJcytE=', 1594965016),
+(39, 'wawanbatang93@gmail.com', 'b+8nlG0+YwF3eRaI2nAvGhrprt8ZbFBFFfPimNBZkRw=', 1594987533),
+(40, 'wawanbatang93@gmail.com', 'V/C8RKdWHUr1whIekLXCskSbo9HnrVG6d2La8WTqJbM=', 1594987589),
+(48, 'perizinanpetugas@gmail.com', 'p72h7iGDLhYeVQ6OKZQtg1HwnCPKcRtIATY/LhkBiW8=', 1595169833),
+(49, 'dkelautandanperikanan@gmail.com', 'Nwwxi9+OGpQ3QNAAS5zeW31IXXgIhKj4OdVeAaA7yEE=', 1595196036),
+(50, 'dkelautandanperikanan@gmail.com', 'XdrZ4hojrqwUOyGp72B6g/8gSyuf6QBoS9rghScuyJA=', 1595200409),
+(51, 'perizinanpetugas@gmail.com', 'QTgnx+pEyrHM2ffvwjrj5bDODvnGn70Hgg3b94he7X4=', 1595200689),
+(52, 'perizinanpetugas@gmail.com', '0A3m7gF33pf5sgT6zH6rGsJfW3evWxLUIuULtF/Krqg=', 1595200705),
+(53, 'dkelautandanperikanan@gmail.com', 'j7H1F15xQlkq1oz2y7x+qcM4oFfO4oes0ewE0BSxfYs=', 1595217705),
+(54, 'dkelautandanperikanan@gmail.com', 'u34fB+who08nYLSYmKmgdEqazBZLiTowQEWFRMPucYc=', 1595217734),
+(55, 'dkelautandanperikanan@gmail.com', 'rw6r/CHSKaoJWc9Q1nq+hcTGzBSmIy5M1FNSN6jd3GY=', 1595217765);
 
 --
 -- Indexes for dumped tables
@@ -412,25 +393,25 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT untuk tabel `tb_identitas_pemilik`
 --
 ALTER TABLE `tb_identitas_pemilik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kapal`
 --
 ALTER TABLE `tb_kapal`
-  MODIFY `id_kp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_kp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_surat`
 --
 ALTER TABLE `tb_surat`
-  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_access_menu`
@@ -460,7 +441,7 @@ ALTER TABLE `user_sub_menu`
 -- AUTO_INCREMENT untuk tabel `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
