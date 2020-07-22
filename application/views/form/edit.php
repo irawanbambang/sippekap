@@ -35,7 +35,7 @@
 
 
           <?= validation_errors(); ?>
-          <?= form_open_multipart('form/simpan'); ?>
+          <?= form_open_multipart('form/ubah'); ?>
             <div class="row">
               <div class="col-6">
                 <div class="modal-content">
@@ -47,11 +47,15 @@
                     <h7>KTP Asli</h7>
                     <br>
                       <div class="custom-control custom-radio custom-control-inline">
-                            <input class="form-check-input" type="radio" name="asal_ktp" id="radio1" value="<?= $asal_ktp ?>" required>
+                            <input class="form-check-input" type="radio" name="asal_ktp" id="radio1" value="Kota Pekalongan" <?php if ($asal_ktp=="Kota Pekalongan") {
+                              echo "checked";
+                            }?>>
                             <label class="form-check-label" for="radio1">Kota Pekalongan</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input class="form-check-input" type="radio" name="asal_ktp" id="radio2" value="<?= $asal_ktp ?>" required>
+                            <input class="form-check-input" type="radio" name="asal_ktp" id="radio2" value="Luar Kota Pekalongan" <?php if ($asal_ktp=="Luar Kota Pekalongan") {
+                              echo "checked";
+                            }?>>
                             <label class="form-check-label" for="radio2">Luar Kota Pekalongan</label>
                         </div>
                        <!-- <input type="text" class="form-control" value="<?= $asal_ktp ?>"> -->
@@ -84,7 +88,8 @@
                     </div>
                     <div class="form-group">
                     <h7>Penerbit</h7>
-                        <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="Masukkan Penerbit">
+                        <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="Masukkan Penerbit" value="<?= $penerbit ?>">
+                         <input type="hidden" class="form-control" id="id_kp" name="id_kp" placeholder="Masukkan Penerbit" value="<?= $id_kp ?>">
                     </div>
                   </div>
                 </div>
@@ -99,6 +104,7 @@
                       <div class="col-md-4">
                         <div class="custom-file">
                           <input type="file" class="custom-file-input" id="upload_ktp" name="upload_ktp">
+                          <input type="hidden" class="custom-file-input" id="upload_ktp_lama" name="upload_ktp_lama" value="<?= $upload_ktp ?>">
                           <label class="custom-file-label" for="upload_ktp">Choose file</label>
                         </div>
                         <img src="<?= base_url()?>assets/upload_image/<?= $upload_ktp ?>" class="card-img">
@@ -109,6 +115,7 @@
                       <div class="col-md-4">
                         <div class="custom-file">
                           <input type="file" class="custom-file-input" id="upload_pas" name="upload_pas">
+                          <input type="hidden" class="custom-file-input" id="upload_pas_lama" name="upload_pas_lama" value="<?= $upload_pas ?>">
                           <label class="custom-file-label" for="upload_pas">Choose file</label>
                         </div>
                         <img src="<?= base_url()?>assets/upload_image/<?= $upload_pas ?>" class="card-img">
@@ -119,6 +126,7 @@
                       <div class="col-md-4">
                         <div class="custom-file">
                           <input type="file" class="custom-file-input" id="upload_kapal_datang" name="upload_kapal_datang">
+                          <input type="hidden" class="custom-file-input" id="upload_kapal_datang_lama" name="upload_kapal_datang_lama" value="<?= $upload_kapal_datang ?>">
                           <label class="custom-file-label" for="upload_kapal_datang">Choose file</label>
                         </div>
                         <img src="<?= base_url()?>assets/upload_image/<?= $upload_kapal_datang ?>" class="card-img">

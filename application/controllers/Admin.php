@@ -192,13 +192,22 @@ class Admin extends CI_Controller
 
 	public function verifikasi()
 	{
+		$tgl_awal      = $this->input->post('tgl_terbit');
+		$tgl_akhir  = $this->input->post('tgl_kadaluwarsa');
+
+		if ($tgl_awal > $tgl_akhir) {
+			        	
+			$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Tanggal Terbit tidak boleh lebih besar dari Tanggal Kadaluwarsa!</div>');
+			echo '<script>window.history.back();</script>';
+		}else{
+
 		$data = array(
 						'status' => 'verifikasi'
 		 );
-		$this->Form_Model->ubah($this->input->post('id_kp'), $data);
+		$this->Form_Model->ubah($this->input->post('id'), $data);
 
 		$data = array(
-						'id_kp' => $this->input->post('id_kp'),
+						'id_kp' => $this->input->post('id'),
 						'no_surat' => $this->input->post('no_surat'),
 						'tgl_terbit' => date('Y-m-d'),
 						'tgl_kadaluwarsa' => date('Y-m-d'),
@@ -207,6 +216,8 @@ class Admin extends CI_Controller
 		$this->Surat_Model->simpan($data);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berkas Berhasil di Verifikasi!</div>');
 		redirect('admin/daftar');
+
+		}
 	}
 
 	public function tolak()
@@ -907,7 +918,7 @@ public function tahun()
 
     public function cetakHtml()
     {
-    	$this->load->view('tes/cetak');
+    	$this->load->view('tes/cetak1');
     }
 	
 

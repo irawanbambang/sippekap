@@ -1,13 +1,12 @@
 
 #User
 + Admin
-	email		: admindkp@gmail.com
-	password	: admindkp
+	email		: perizinanpetugas@gmail.com
+	password	: sudarso46
 	
 + Kepala Dinas
-	email		: dkpkotapekalongan6@gmail.com
-	password	: admindkp
-
+	email		: dkelautandanperikanan@gmail.com
+	password	: kadin46
 + Pemohon
 	email		: wawanbatang93@gmail.com
 	password	: admindkp

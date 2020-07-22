@@ -4,7 +4,7 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Form Pendaftaran Perizinan Kapal</h1>
 
-
+          <?= $this->session->flashdata('message'); ?>
           <?= validation_errors(); ?>
           <?= form_open_multipart('form/simpan'); ?>
             <div class="row">
@@ -43,6 +43,11 @@
                       <h7>No. Pas Kecil</h7>
                       <br>
                         <input type="text" class="form-control" id="no_pas" name="no_pas" placeholder="Masukkan No Pas Kecil....." required>
+                      </div>
+                      <div id="form-tanggal">
+                          <label>Coba Tanggal</label><br>
+                          <input type="text" name="tanggal" class="input-tanggal" />
+                          <br /><br />
                       </div>
                       <div class="form-group">
                       <h7>Tanggal Terbit</h7>
@@ -198,6 +203,13 @@
         <!-- /.container-fluid -->
 
         <script>
+          $(document).ready(function(){ // Ketika halaman selesai di load
+            $('.input-tanggal').datepicker({
+                dateFormat: 'dd-mm-yy' // Set format tanggalnya jadi yyyy-mm-dd
+            });
+          }  
+        
+        
           $('#bahan').change(function(){
             let lain = $('#bahan').val();
             console.log(lain);

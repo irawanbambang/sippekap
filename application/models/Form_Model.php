@@ -7,11 +7,17 @@ class Form_Model extends CI_MOdel
 	{
 		return $this->db->get('tb_kapal')->result_array();
 	}
+	// public function getbynik($nik)
+	// {
+	// 	$this->db->from('tb_kapal');
+	// 	$this->db->where('nik', $nik);
+	// 	return $this->db->get()->result_array();
+	// }
 	public function getbynik($nik)
 	{
-		$this->db->select('*');
-		$this->db->from('tb_surat as s');
-		$this->db->join('tb_kapal as k', 'k.id_kp = s.id_kp');
+		$this->db->select('s.*,k.id_surat');
+		$this->db->from('tb_kapal as s');
+		$this->db->join('tb_surat as k', 'k.id_kp = s.id_kp','LEFT outer');
 		$this->db->where('nik', $nik);
 		return $this->db->get()->result_array();
 	}

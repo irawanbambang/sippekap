@@ -14,7 +14,7 @@ class User extends CI_Controller
 	{
 		$data['title'] = 'My Profile';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-		
+		$data['pengguna']= $this->User_Model->getUser($this->session->userdata('email')); 
 		$this->load->view('tamplates/header', $data);
 		$this->load->view('tamplates/sidebar', $data);
 		$this->load->view('tamplates/topbar', $data);
@@ -28,7 +28,19 @@ class User extends CI_Controller
 		$data['title'] = 'Ubah Profile';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+		$data['pengguna']= $this->User_Model->getUser($this->session->userdata('email'));
+
 		$this->form_validation->set_rules('name', 'Full Name', 'required|trim');
+
+		$this->form_validation->set_rules('no_hp', 'Nomor Hp', 'required|trim');
+		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|trim');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'required|trim');
+		$this->form_validation->set_rules('rt', 'rt', 'required|trim');
+		$this->form_validation->set_rules('rw', 'rw', 'required|trim');
+		$this->form_validation->set_rules('kelurahan', 'kelurahan', 'required|trim');
+		$this->form_validation->set_rules('kecamatan', 'kecamatan', 'required|trim');
+		$this->form_validation->set_rules('provinsi', 'provinsi', 'required|trim');
+		$this->form_validation->set_rules('kota', 'kota', 'required|trim');
 		
 		if($this->form_validation->run() == false) 
 		{
@@ -38,6 +50,8 @@ class User extends CI_Controller
 			$this->load->view('user/edit', $data);
 			$this->load->view('tamplates/footer');
 	}else{
+		
+
 		$name = $this->input->post('name');
 		$email = $this->input->post('email');
 
@@ -53,7 +67,7 @@ class User extends CI_Controller
 
 			if($this->upload->do_upload('image')) {
 				$old_image = $data['user']['image'];
-				if($old_image != 'default.jpg') {
+				if($old_image != 'default.png') {
 					unlink(FCPATH . 'assets/img/profile/' . $old_image);
 				}
 
@@ -68,8 +82,20 @@ class User extends CI_Controller
 		$this->db->set('name', $name);
 		$this->db->where('email', $email);
 		$this->db->update('user');
-
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Your profile has been update</div>');
+		$data = [
+				'nama' => $this->input->post('name'),
+				'no_hp' => $this->input->post('no_hp'),
+				'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+				'alamat' => $this->input->post('alamat'),
+				'rt' => $this->input->post('rt'),
+				'rw' => $this->input->post('rw'),
+				'kelurahan' => $this->input->post('kelurahan'),
+				'kecamatan' => $this->input->post('kecamatan'),
+				'provinsi' => $this->input->post('provinsi'),
+				'kota' => $this->input->post('kota')
+			];
+		$this->User_Model->ubahidentitas($this->input->post('id_user'),$data);	
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Profile Anda Berhasil di Ubah</div>');
 		redirect('user');
 		}
 

@@ -101,7 +101,7 @@ class Auth extends CI_Controller
 		if($this->session->userdata('email')) {
 			redirect('user');
 		}
-		$this->form_validation->set_rules('nik', 'NIK', 'required|trim');
+		$this->form_validation->set_rules('nik', 'NIK', 'required|trim|min_length[16]|max_length[16]');
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]',[
 			'is_unique' => 'This email has already registered !'
@@ -121,12 +121,17 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('provinsi', 'provinsi', 'required|trim');
 		$this->form_validation->set_rules('kota', 'kota', 'required|trim');
 
+		$cek = $this->User_Model->cari_nik($this->input->post('nik'));
 		if( $this->form_validation->run() == false) {
 			$data['title'] = 'SIPPEKP Registrsi';
 			$this->load->view('tamplates/auth_header', $data);
 			$this->load->view('auth/identitas');
 			$this->load->view('tamplates/auth_footer');
-		} else {
+		} elseif(!empty($cek)){
+			$this->form_validation->set_rules('nik', 'NIK sudah terdaftar', 'required|trim');
+			$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">NIK sudah terdaftar</div>');
+			echo '<script>window.history.back();</script>';
+		}else {
 			$email = $this->input->post('email', true);
 			$data = [
 				'name' => htmlspecialchars($this->input->post('nama', true)),
@@ -158,7 +163,7 @@ class Auth extends CI_Controller
 			}
 
 			$data = [
-				'id' => $id,
+				'id_user' => $id,
 				'nik' => $this->input->post('nik'),
 				'nama' => $this->input->post('nama'),
 				'no_hp' => $this->input->post('no_hp'),
@@ -169,8 +174,7 @@ class Auth extends CI_Controller
 				'kelurahan' => $this->input->post('kelurahan'),
 				'kecamatan' => $this->input->post('kecamatan'),
 				'provinsi' => $this->input->post('provinsi'),
-				'kota' => $this->input->post('kota'),
-				'image' => 'default.png'
+				'kota' => $this->input->post('kota')
 			];
 
 			$this->User_Model->simpan($data);

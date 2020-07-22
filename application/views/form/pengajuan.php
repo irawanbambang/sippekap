@@ -26,7 +26,7 @@
                   <?php $no=1; foreach ($pengajuan as $p) :?>
                     <tr>
                       <td><?= $no++ ?></td>
-                      <td><?= $p['no_pas'] ?></td>
+                      <td><?= $p['id_kp'] ?></td>
                       <td><?= $p['tgl_terbit'] ?></td>
                       <td><?= $p['nik'] ?></td>
                       <td><?= $p['nama_kapal'] ?></td>
@@ -49,6 +49,9 @@
                         <a href="<?= base_url('Form/download_surat/'.$p["id_surat"]); ?>" class="btn btn-success btn-box btn-sm" title="cetak">
                           <i class="fas fa-fw fa-print"></i>
                         </a>
+                        <!-- <a href="<?= base_url('Form/pdf') ?>" class="btn btn-success btn-box btn-sm" title="cetak">
+                          <i class="fas fa-fw fa-print"></i>
+                        </a> -->
 
                         <?php } ?>
                         
@@ -57,23 +60,6 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
-  					<ul class="pagination">
-    					<li class="page-item">
-      					<a class="page-link" href="#" aria-label="Previous">
-        					<span aria-hidden="true">&laquo;</span>
-      					</a>
-    					</li>
-    					<li class="page-item"><a class="page-link" href="#">1</a></li>
-    					<li class="page-item"><a class="page-link" href="#">2</a></li>
-    					<li class="page-item"><a class="page-link" href="#">3</a></li>
-    					<li class="page-item">
-      					<a class="page-link" href="#" aria-label="Next">
-        					<span aria-hidden="true">&raquo;</span>
-      					</a>
-    					</li>
-  					</ul>
-					</nav>
               </div>
             </div>
           </div>
@@ -98,7 +84,7 @@
         <div class="modal-body">
           <input type="hidden" name="id_kp">
           <div class="form-group">
-              <textarea class="form-control" id="pesan" name="textarea"></textarea>
+              <textarea class="form-control" id="pesan" name="pesan" readonly></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -113,7 +99,7 @@
 function lihat_pesan(id)
 {
     $.ajax({
-        url : "<?php echo site_url('admin/ambil_pesan')?>/" + id,
+        url : "<?php echo site_url('form/ambil_pesan')?>/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -129,8 +115,7 @@ function lihat_pesan(id)
         }
     });
 }
-</script>
-<!-- 
+</script><!-- 
 <script>
 function lihat_pesan(id)
 {

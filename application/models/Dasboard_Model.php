@@ -12,8 +12,12 @@ class Dasboard_Model extends CI_MOdel
 
 	public function ambilDataPerizinan()
 	{
-		$this->db->from('tb_surat');
-		$this->db->from('tb_surat_perizinan');
+		$this->db->from('tb_kapal');
+		$this->db->where('status != "menunggu"');
+		$this->db->where('status != "proses"');
+		$this->db->where('status != "verifikasi"');
+		$this->db->where('status != "tolak"');
+		// $this->db->from('tb_surat_perizinan');
 
 		return $this->db->count_all_results();
 	}

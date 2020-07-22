@@ -10,9 +10,10 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Masukkan Data Diri</h1>
               </div>
+              <?= $this->session->flashdata('message'); ?>
               <form class="user" method="post" action="<?= base_url('auth/registration');  ?>">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="nik" placeholder="NIK" name="nik" value="<?= set_value('nik'); ?>"><?= form_error('nik', '<small class="text-danger pl-3">', '</small>'); ?>
+                  <input type="number" class="form-control form-control-user" id="nik" placeholder="NIK" name="nik" value="<?= set_value('nik'); ?>"><?= form_error('nik', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="form-group">
                   <input type="text" class="form-control form-control-user" id="nama" placeholder="Nama Lengkap" name="nama" value="<?= set_value('nama'); ?>"><?= form_error('nama', '<small class="text-danger pl-3">', '</small>'); ?>

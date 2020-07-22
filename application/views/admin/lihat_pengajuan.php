@@ -34,7 +34,7 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Form Pendaftaran Perizinan Kapal</h1>
 
-
+          <?= $this->session->flashdata('message'); ?>
           <?= validation_errors(); ?>
           <?= form_open_multipart('form/simpan'); ?>
             <div class="row">
@@ -255,17 +255,21 @@
       <form action="<?= base_url('admin/verifikasi'); ?>" method="post">
         <div class="modal-body">
           <div class="form-group">
-             <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Nomor Surat">
+            <label>Nomor Surat</label>
+             <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Masukkan No. Surat" required>
              <input type="hidden" class="form-control" id="id" name="id" placeholder="Nomor Surat">
           </div>
           <div class="form-group">
+              <label>Tanggal Terbit</label>
               <input type="date" class="form-control" id="tgl_terbit" name="tgl_terbit" placeholder="Tanggal Terbit">
           </div>
           <div class="form-group">
+              <label>Tanggal Kadaluwarsa</label>
               <input type="date" class="form-control" id="tgl_kadaluwarsa" name="tgl_kadaluwarsa" placeholder="Tanggal Kadaluwarsa">
           </div>
           <div class="form-group">
-              <input type="text" class="form-control" id="catatan" name="catatan" placeholder="Catatan">
+              <label>Catatan</label>
+              <input type="text" class="form-control" id="catatan" name="catatan" placeholder="Masukkan Catatan" required>
           </div>
         </div>
         <div class="modal-footer">
@@ -289,7 +293,7 @@
       </div>
       <form action="<?= base_url('admin/tolak'); ?>" method="post">
         <div class="modal-body">
-          <input type="hidden" name="id_kp" value="">
+          <input type="hidden" name="id_kp" id="id_kp" value="">
           <div class="form-group">
               <textarea class="form-control" id="pesan" name="pesan" placeholder="Catatan"></textarea>
           </div>

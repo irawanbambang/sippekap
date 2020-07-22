@@ -18,7 +18,7 @@
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h4 class="h4 text-primary mb-4"><b>Ubah password untuk @admindkp@gmail.com<?= $this->session->userdata('reset_email'); ?></b></h4>
+                                    <h4 class="h4 text-primary mb-4"><b>Ubah password untuk <?= $this->session->userdata('reset_email'); ?></b></h4>
                                 </div>
 
                                 <?= $this->session->flashdata('message') ?>

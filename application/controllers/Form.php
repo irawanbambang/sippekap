@@ -10,7 +10,18 @@ class Form extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->model('Form_Model');
 		$this->load->model('SuratTolak_Model');
+		$this->load->helper('tgl_indo');
 	}
+
+	function tgl(){
+        echo shortdate_indo('2017-09-5');
+        echo "<br/>";
+        echo date_indo('2017-09-5');
+        echo "<br/>";
+        echo mediumdate_indo('2017-09-5');
+        echo "<br/>";
+        echo longdate_indo('2017-09-5');
+    }
 	
 	public function pendaftaran()
 	{
@@ -73,6 +84,16 @@ class Form extends CI_Controller
 				// 	// echo "form validasi false";
 				// 	// die;
 				// }else{
+					$tgl_awal      = $this->input->post('tgl_terbit');
+			        $tgl_akhir  = $this->input->post('tgl_kadaluwarsa');
+
+			        if ($tgl_awal > $tgl_akhir) {
+			        	
+			        	$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Tanggal Terbit tidak boleh lebih besar dari Tanggal Kadaluwarsa!</div>');
+			        	echo '<script>window.history.back();</script>';
+			        }else{
+
+
 					$upload_pas = $_FILES['upload_pas']['name'];
 					if ($upload_pas) {
 						$config['allowed_types'] = 'gif|jpeg|jpg|png';
@@ -150,6 +171,7 @@ class Form extends CI_Controller
 		            	$bahan = $this->input->post('bahan');
 		            }
 
+
 	 	            $data = array('no_pas' => $this->input->post('no_pas'), 
 	 	            				'asal_ktp' => $this->input->post('asal_ktp'),
 									'nik' => $this->input->post('nik'),
@@ -175,7 +197,8 @@ class Form extends CI_Controller
 					$this->Form_Model->simpan($data);
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menambah Pengajuan!</div>');
 					redirect('form/pengajuan');
-				// }
+
+					}
 
 				
 	}
@@ -212,7 +235,7 @@ class Form extends CI_Controller
 		                    echo $this->upload->display_errors();
 		                }
 		            } else {
-		            	$nama_foto_upload_pas = '';
+		            	$nama_foto_upload_pas = $this->input->post('upload_pas_lama');
 		            }
 
 		            // echo $nama_foto_upload_pas;
@@ -233,7 +256,7 @@ class Form extends CI_Controller
 		                    echo $this->upload->display_errors();
 		                }
 		            } else {
-		            	$nama_foto_upload_kapal_datang = '';
+		            	$nama_foto_upload_kapal_datang = $this->input->post('upload_kapal_datang_lama');
 		            }
 
 		            // echo $nama_foto_upload_kapal_datang;
@@ -254,7 +277,7 @@ class Form extends CI_Controller
 		                    echo $this->upload->display_errors();
 		                }
 		            } else {
-		            	$nama_foto_upload_ktp = '';
+		            	$nama_foto_upload_ktp = $this->input->post('upload_ktp_lama');
 		            }
 
 		            $jenis_alat = '';
@@ -275,7 +298,6 @@ class Form extends CI_Controller
 		$data = array(
 						'no_pas' => $this->input->post('no_pas'),
 						'asal_ktp' => $this->input->post('asal_ktp'),
-						'nik' => $this->input->post('nik'),
 						'tgl_terbit' => date('Y-m-d'),
 						'tgl_kadaluwarsa' => date('Y-m-d'),
 						'penerbit' => $this->input->post('penerbit'),
@@ -293,8 +315,7 @@ class Form extends CI_Controller
 						'anak_buah' => $this->input->post('anak_buah'),
 						'upload_pas' => $nama_foto_upload_pas,
 						'upload_kapal_datang' => $nama_foto_upload_kapal_datang,
-						'upload_ktp' => $nama_foto_upload_ktp,
-						'status' => 'menunggu'
+						'upload_ktp' => $nama_foto_upload_ktp
 		 );
 		$this->Form_Model->ubah($this->input->post('id_kp'),$data);
 		redirect('form/pengajuan');
@@ -323,6 +344,12 @@ class Form extends CI_Controller
 	public function download_surat($id_surat) {
 		$data = $this->db->get_where('tb_surat', ['id_surat' => $id_surat])->row_array();
 		force_download('assets/upload_image/'.$data['upload_surat'], NULL);
+	}
+
+	public function ambil_pesan($id)
+	{
+	    $data = $this->Form_Model->ambil_pesan($id);
+	    echo json_encode($data);
 	}
     
 }
