@@ -1,3 +1,11 @@
+        
+         <script type="text/javascript">
+          $(document).ready(function(){ // Ketika halaman selesai di load
+            $('.input-tanggal').datepicker({
+                dateFormat: 'dd-mm-yy' // Set format tanggalnya jadi yyyy-mm-dd
+            });
+          });  
+        </script>
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
@@ -44,17 +52,14 @@
                       <br>
                         <input type="text" class="form-control" id="no_pas" name="no_pas" placeholder="Masukkan No Pas Kecil....." required>
                       </div>
-                      <div id="form-tanggal">
-                          <label>Coba Tanggal</label><br>
-                          <input type="text" name="tanggal" class="input-tanggal" />
-                          <br /><br />
-                      </div>
                       <div class="form-group">
                       <h7>Tanggal Terbit</h7>
-                          <input type="date" class="form-control" id="tgl_terbit" name="tgl_terbit" required>
+                      <br/>
+                          <input type="date" class="form-control" id="tgl_terbit" name="tgl_terbit"  required>
                       </div>
                       <div class="form-group">
-                      <h7>Tanggal Kadaluarsa</h7>
+                      <h7>Tanggal Kadaluwarsa</h7>
+                      <br/>
                           <input type="date" class="form-control" id="tgl_kadaluwarsa" name="tgl_kadaluwarsa" required>
                       </div>
                       <div class="form-group">
@@ -193,8 +198,7 @@
                 </div>
                 </div>
             </div>
-
-        		<button type="submit" class="btn btn-success">Tambah</button>
+        		<button type="submit" class="btn btn-success" onclick="add('')">Tambah</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             <br/>
             <br/>
@@ -236,3 +240,32 @@
       </div>
       <!-- End of Main Content -->
 
+<script>
+  function tolak(id){
+    $('[name="nik"]').val(id);
+    $('#newSubMenuModalTolak').modal('show');
+    $('.modal-title').text('Update Permohonan');
+  }
+</script>
+
+<!-- Modal Tolak -->
+<div class="modal fade" id="newSubMenuModalTolak" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newSubMenuModalLabel">Tambah Data Surat</h5>
+      </div>
+      <form action="<?= base_url('form/add'); ?>" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+              <textarea class="form-control" id="pesan" name="pesan" placeholder="Catatan"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2020 at 04:14 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.4
+-- Waktu pembuatan: 30 Jul 2020 pada 12.45
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_identitas_pemilik`
+-- Struktur dari tabel `tb_identitas_pemilik`
 --
 
 CREATE TABLE `tb_identitas_pemilik` (
@@ -45,18 +45,19 @@ CREATE TABLE `tb_identitas_pemilik` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_identitas_pemilik`
+-- Dumping data untuk tabel `tb_identitas_pemilik`
 --
 
 INSERT INTO `tb_identitas_pemilik` (`id`, `id_user`, `nik`, `nama`, `no_hp`, `jenis_kelamin`, `alamat`, `rt`, `rw`, `kelurahan`, `kecamatan`, `provinsi`, `kota`) VALUES
 (44, 44, '1234758394821734', 'Admin DKP', '098767832123', 'Laki-laki', 'Jl. WR Supratman No.45', '05', '03', 'Panjang Wetan', 'Pekalongan Utara', 'Jawa Tengah', 'Pekalongan'),
 (45, 45, '1234758394821876', 'Kepala Dinas', '098767832345', 'Laki-laki', 'Perum Buara No. 32', '12', '09', 'Buaran', 'Pekalongan Timur', 'Jawa Tengah', 'Pekalongan'),
-(46, 46, '1254658416521300', 'Coba Test', '098767832678', 'Laki-laki', 'Jl. Ki Mangunsarkoro', '03', '03', 'Proyonanggan Selatan', 'Batang', 'Jawa Tengah', 'Batang');
+(46, 46, '1254658416521300', 'Coba Test', '098767832678', 'Laki-laki', 'Jl. Ki Mangunsarkoro', '03', '03', 'Proyonanggan Selatan', 'Batang', 'Jawa Tengah', 'Batang'),
+(48, 48, '8767876567876567', 'Bambang Irawan', '098765678765', 'Laki-laki', 'Jl. Ki Mangunsarkoro', '03', '03', 'Proyonanggan Selatan', 'Batang', 'Jawa Tengah', 'Batang');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_kapal`
+-- Struktur dari tabel `tb_kapal`
 --
 
 CREATE TABLE `tb_kapal` (
@@ -83,21 +84,33 @@ CREATE TABLE `tb_kapal` (
   `upload_pas` varchar(50) NOT NULL,
   `upload_kapal_datang` varchar(50) NOT NULL,
   `status` enum('menunggu','proses','verifikasi','tolak','terima','disahkan','stempel') NOT NULL,
-  `pesan` text NOT NULL
+  `pesan` text NOT NULL,
+  `tgl_pengajuan` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_kapal`
+-- Dumping data untuk tabel `tb_kapal`
 --
 
-INSERT INTO `tb_kapal` (`id_kp`, `no_pas`, `asal_ktp`, `nik`, `tgl_terbit`, `tgl_kadaluwarsa`, `penerbit`, `nama_kapal`, `tanda_selar`, `jenis_alat`, `berat`, `muatan`, `kekuatan`, `merk_mesin`, `no_mesin`, `bahan`, `penangkapan`, `pangkalan`, `anak_buah`, `upload_ktp`, `upload_pas`, `upload_kapal_datang`, `status`, `pesan`) VALUES
-(1, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-20', '2020-07-20', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM NURSEMI JAYA', 'JTA 4 No. 5', '1', 4, 2, 16, 'NP', '-', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 3, '200720010227.jpg', '200720125840.jpg', '2007201258401.jpg', 'proses', 'Data identitas kapal dan juga upload gambar tidak sesuai'),
-(2, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-20', '2020-07-20', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'jaring_insang', 3, 23, 30, 'Toyota', 'b032 kk', 'kayu', 'Kota Pekalongan', 'Pelabuhan Perikanan Nusan', 2, '2007200617042.jpg', '200720061704.jpg', '2007200617041.jpg', 'disahkan', '');
+INSERT INTO `tb_kapal` (`id_kp`, `no_pas`, `asal_ktp`, `nik`, `tgl_terbit`, `tgl_kadaluwarsa`, `penerbit`, `nama_kapal`, `tanda_selar`, `jenis_alat`, `berat`, `muatan`, `kekuatan`, `merk_mesin`, `no_mesin`, `bahan`, `penangkapan`, `pangkalan`, `anak_buah`, `upload_ktp`, `upload_pas`, `upload_kapal_datang`, `status`, `pesan`, `tgl_pengajuan`) VALUES
+(1, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-20', '2020-07-20', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM NURSEMI JAYA', 'JTA 4 No. 5', '1', 4, 2, 16, 'NP', '-', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 3, '200720010227.jpg', '200720125840.jpg', '2007201258401.jpg', 'verifikasi', 'Data identitas kapal dan juga upload gambar tidak sesuai', '0000-00-00'),
+(2, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-20', '2020-07-20', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'jaring_insang', 3, 23, 30, 'Toyota', 'b032 kk', 'kayu', 'Kota Pekalongan', 'Pelabuhan Perikanan Nusan', 2, '2007200617042.jpg', '200720061704.jpg', '2007200617041.jpg', 'disahkan', '', '0000-00-00'),
+(3, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-24', '2021-07-24', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'jaring_insang', 2, 20, 16, 'NP', 'AA 634 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007230534102.jpg', '200723053410.jpg', '2007230534101.jpg', 'verifikasi', '', '0000-00-00'),
+(4, 'AL.002/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-25', '2021-07-24', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', '1', 2, 23, 16, 'NP', 'AA 634 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007230647112.jpg', '200723064711.jpg', '2007230647111.jpg', 'stempel', 'tanggal terbit surattidak sesui\r\n', '0000-00-00'),
+(5, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '0000-00-00', '0000-00-00', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'jaring_angkat', 3, 2, 16, 'NP', 'AA 654 kk', 'besi', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007240354402.jpg', '200724035440.jpg', '2007240354401.jpg', 'verifikasi', '', '0000-00-00'),
+(6, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-24', '2021-07-24', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'pukat_kantong', 2, 23, 16, 'NP', 'AA 654 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007240359052.jpg', '200724035905.jpg', '2007240359051.jpg', 'verifikasi', '', '0000-00-00'),
+(7, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-24', '2021-07-24', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'pukat_kantong', 2, 20, 16, 'NP', 'AA 654 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007240540152.jpg', '200724054015.jpg', '2007240540151.jpg', 'disahkan', '', '0000-00-00'),
+(8, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-24', '2021-07-24', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', '2', 2, 20, 16, 'NP', 'AA 654 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007240810082.jpg', '200724081008.jpg', '2007240810081.jpg', 'verifikasi', 'berkas tidak sesuai', '0000-00-00'),
+(9, 'PK. 202/13/22/U', 'Kota Pekalongan', '1254658416521300', '2020-07-24', '2020-07-24', 'Kantor UPP Kelas III Batang', 'KM LANCAR JAYA', 'JTA 5 No 703', '1', 2, 1, 26, 'JIANGFA', '-', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007240454422.jpg', '200724045442.jpg', '2007240454421.jpg', 'proses', '', '0000-00-00'),
+(10, 'AL.001/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-25', '2020-08-25', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR MAKMUR', 'JTA 4 No. 5', 'pukat_kantong', 2, 23, 16, 'NP', 'AA 634 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007251250102.jpg', '200725125010.jpg', '2007251250101.jpg', 'proses', '', '2020-07-24'),
+(11, 'AL.002/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-27', '2021-07-27', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANCAR SEJATI', 'JTA 4 No. 5', 'pukat_kantong', 2, 20, 16, 'NP', 'AA 654 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007270212452.jpg', '200727021245.jpg', '2007270212451.jpg', 'menunggu', '', '2020-07-24'),
+(12, 'AL.002/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-28', '2021-07-28', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM SUBUR', 'JTA 4 No. 5', 'pukat_kantong', 2, 23, 16, 'NP', 'AA 654 kk', 'kayu', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 2, '2007280645442.jpg', '200728064544.jpg', '2007280645441.jpg', 'menunggu', '', '2020-07-28'),
+(13, 'AL.003/1/1/KSOP', 'Luar Kota Pekalongan', '1254658416521300', '2020-07-29', '2021-07-29', 'KANTOR KSOP KELAS IV TEGAL, WILKER PEKALONGAN', 'KM LANGGENG JAYA', 'JTA 4 No. 5', 'SEKOP', 2, 23, 16, 'NP', 'AA 654 kk', '', 'Laut Utara Jawa', 'Pelabuhan Perikanan Nusan', 3, '2007291015182.jpg', '200729101518.jpg', '2007291015181.jpg', 'menunggu', '', '2020-07-29');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_surat`
+-- Struktur dari tabel `tb_surat`
 --
 
 CREATE TABLE `tb_surat` (
@@ -112,16 +125,23 @@ CREATE TABLE `tb_surat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_surat`
+-- Dumping data untuk tabel `tb_surat`
 --
 
 INSERT INTO `tb_surat` (`id_surat`, `id_kp`, `no_surat`, `tgl_terbit`, `tgl_kadaluwarsa`, `catatan`, `upload_surat`, `tgl_verifikasi`) VALUES
-(2, 2, '002/SPKPI/DKP/XI/2020', '2020-07-20', '2020-07-20', '-', '', '2020-07-01');
+(2, 2, '002/SPKPI/DKP/XI/2020', '2020-07-20', '2020-07-20', '-', '', '2020-07-01'),
+(3, 1, '002/SPKPI/DKP/VII/2020', '2020-07-23', '0000-00-00', '-', '', '2020-07-23'),
+(4, 3, '003/SPKPI/DKP/VII/2020', '2020-07-23', '2020-10-23', '-', '', '2020-07-23'),
+(5, 7, '004/SPKPI/DKP/VII/2020', '2020-07-24', '2020-10-24', '-', '', '2020-07-24'),
+(6, 5, '005/SPKPI/DKP/VII/2020', '2020-07-24', '2020-10-24', '-', '', '2020-07-24'),
+(7, 8, '006/SPKPI/DKP/VII/2020', '2020-07-24', '2020-10-24', '-', '', '2020-07-24'),
+(8, 4, '007/SPKPI/DKP/VII/2020', '2020-07-24', '2020-10-24', '-', '200724082850.jpg', '2020-07-24'),
+(9, 6, '008/SPKPI/DKP/VII/2020', '2020-07-24', '2020-10-24', '-', '', '2020-07-24');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_surat_perizinan`
+-- Struktur dari tabel `tb_surat_perizinan`
 --
 
 CREATE TABLE `tb_surat_perizinan` (
@@ -133,7 +153,7 @@ CREATE TABLE `tb_surat_perizinan` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -148,18 +168,19 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
 (44, 'Admin DKP', 'perizinanpetugas@gmail.com', 'Lighthouse.jpg', '$2y$10$pL4nwshOCakAjMXoawS7P.c9lCVHQ.2b6DRDnYDRAS3QIA5V8tr7G', 1, 1, 1595169424),
 (45, 'Kepala Dinas', 'dkelautandanperikanan@gmail.com', 'Lighthouse.jpg', '$2y$10$yecHeIMwnaYx0Q1M7FeMSeekU/4bjPdr9Gadx6giIRU/3OX0oCfvy', 3, 1, 1595170101),
-(46, 'Coba Test', 'wawanpkl33@gmail.com', 'Tulips.jpg', '$2y$10$3wRg166qpsuKJXrDhBoRFeoprqim6Rnrpu8iDRJYX10G0bSt1UYt6', 2, 1, 1595196330);
+(46, 'Coba Test', 'wawanpkl33@gmail.com', 'Tulips.jpg', '$2y$10$3wRg166qpsuKJXrDhBoRFeoprqim6Rnrpu8iDRJYX10G0bSt1UYt6', 2, 1, 1595196330),
+(48, 'Bambang Irawan', 'wawanbatang93@gmail.com', 'default.png', '$2y$10$1gyxDykqQKBW4Z0sCte88.jwPkqTYKRfUv.FRx1DK3TbBcxXGfXYi', 2, 0, 1595605780);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_access_menu`
+-- Struktur dari tabel `user_access_menu`
 --
 
 CREATE TABLE `user_access_menu` (
@@ -169,7 +190,7 @@ CREATE TABLE `user_access_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_access_menu`
+-- Dumping data untuk tabel `user_access_menu`
 --
 
 INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
@@ -185,7 +206,7 @@ INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_menu`
+-- Struktur dari tabel `user_menu`
 --
 
 CREATE TABLE `user_menu` (
@@ -194,7 +215,7 @@ CREATE TABLE `user_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_menu`
+-- Dumping data untuk tabel `user_menu`
 --
 
 INSERT INTO `user_menu` (`id`, `menu`) VALUES
@@ -209,7 +230,7 @@ INSERT INTO `user_menu` (`id`, `menu`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_role`
+-- Struktur dari tabel `user_role`
 --
 
 CREATE TABLE `user_role` (
@@ -218,7 +239,7 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_role`
+-- Dumping data untuk tabel `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `role`) VALUES
@@ -229,7 +250,7 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_sub_menu`
+-- Struktur dari tabel `user_sub_menu`
 --
 
 CREATE TABLE `user_sub_menu` (
@@ -242,7 +263,7 @@ CREATE TABLE `user_sub_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_sub_menu`
+-- Dumping data untuk tabel `user_sub_menu`
 --
 
 INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active`) VALUES
@@ -266,7 +287,7 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_token`
+-- Struktur dari tabel `user_token`
 --
 
 CREATE TABLE `user_token` (
@@ -277,7 +298,7 @@ CREATE TABLE `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_token`
+-- Dumping data untuk tabel `user_token`
 --
 
 INSERT INTO `user_token` (`id`, `email`, `token`, `date_created`) VALUES
@@ -319,129 +340,131 @@ INSERT INTO `user_token` (`id`, `email`, `token`, `date_created`) VALUES
 (52, 'perizinanpetugas@gmail.com', '0A3m7gF33pf5sgT6zH6rGsJfW3evWxLUIuULtF/Krqg=', 1595200705),
 (53, 'dkelautandanperikanan@gmail.com', 'j7H1F15xQlkq1oz2y7x+qcM4oFfO4oes0ewE0BSxfYs=', 1595217705),
 (54, 'dkelautandanperikanan@gmail.com', 'u34fB+who08nYLSYmKmgdEqazBZLiTowQEWFRMPucYc=', 1595217734),
-(55, 'dkelautandanperikanan@gmail.com', 'rw6r/CHSKaoJWc9Q1nq+hcTGzBSmIy5M1FNSN6jd3GY=', 1595217765);
+(55, 'dkelautandanperikanan@gmail.com', 'rw6r/CHSKaoJWc9Q1nq+hcTGzBSmIy5M1FNSN6jd3GY=', 1595217765),
+(56, 'wawanbatang93@gmail.com', 'rR6kRQp/KgNDdh34lN/40F9gWSVQ2jKCAgB2xrKEsZQ=', 1595605533),
+(57, 'wawanbatang93@gmail.com', 'stVfjiY5PBScJOGtcbYCzfuSa+8aNHXNxkKNiVx0PSE=', 1595605780);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tb_identitas_pemilik`
+-- Indeks untuk tabel `tb_identitas_pemilik`
 --
 ALTER TABLE `tb_identitas_pemilik`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_kapal`
+-- Indeks untuk tabel `tb_kapal`
 --
 ALTER TABLE `tb_kapal`
   ADD PRIMARY KEY (`id_kp`);
 
 --
--- Indexes for table `tb_surat`
+-- Indeks untuk tabel `tb_surat`
 --
 ALTER TABLE `tb_surat`
   ADD PRIMARY KEY (`id_surat`);
 
 --
--- Indexes for table `tb_surat_perizinan`
+-- Indeks untuk tabel `tb_surat_perizinan`
 --
 ALTER TABLE `tb_surat_perizinan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_access_menu`
+-- Indeks untuk tabel `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_menu`
+-- Indeks untuk tabel `user_menu`
 --
 ALTER TABLE `user_menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_role`
+-- Indeks untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_sub_menu`
+-- Indeks untuk tabel `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_token`
+-- Indeks untuk tabel `user_token`
 --
 ALTER TABLE `user_token`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tb_identitas_pemilik`
+-- AUTO_INCREMENT untuk tabel `tb_identitas_pemilik`
 --
 ALTER TABLE `tb_identitas_pemilik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT for table `tb_kapal`
+-- AUTO_INCREMENT untuk tabel `tb_kapal`
 --
 ALTER TABLE `tb_kapal`
-  MODIFY `id_kp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `tb_surat`
+-- AUTO_INCREMENT untuk tabel `tb_surat`
 --
 ALTER TABLE `tb_surat`
-  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT for table `user_access_menu`
+-- AUTO_INCREMENT untuk tabel `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
--- AUTO_INCREMENT for table `user_menu`
+-- AUTO_INCREMENT untuk tabel `user_menu`
 --
 ALTER TABLE `user_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `user_role`
+-- AUTO_INCREMENT untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `user_sub_menu`
+-- AUTO_INCREMENT untuk tabel `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `user_token`
+-- AUTO_INCREMENT untuk tabel `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

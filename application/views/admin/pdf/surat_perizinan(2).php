@@ -182,7 +182,7 @@
         ANAK BUAH KAPAL
       </div>
       <div class="column center">
-        <?=$c['anak_buah']?> orang
+         orang
       </div>
       <div class="column header">
         MASA BERLAKU
@@ -193,10 +193,9 @@
         <?=date('d', strtotime($c['tgl_kadaluwarsa']))?> <?=$bulan[(int)date('m', strtotime($c['tgl_kadaluwarsa']))]?> <?=date('Y', strtotime($c['tgl_kadaluwarsa']))?>   </div>
       <div class="column" style="border-bottom: 0">
         <div class="ttd">
-          Pekalongan, <?php echo date('d', strtotime($c['tgl_verifikasi'])).' '.$bulan[(int)date('m', strtotime($c['tgl_verifikasi']))].' '.date('Y', strtotime($c['tgl_verifikasi']));?><br>
+          Pekalongan, <?php echo date('d').' '.$bulan[(int)date('m')].' '.date('Y');?><br>
           KEPALA DINAS KELAUTAN DAN PERIKANAN KOTA PEKALONGAN
         </div>
-        <center><img src="<?=base_url()?>assets/img/ttd.jpeg" width="100%" ></center>
         <table style="margin-left: 3mm; margin-bottom: 2mm">
           <tbody><tr>
             <td width="30%">NAMA</td>

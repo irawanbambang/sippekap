@@ -13,16 +13,6 @@ class Form extends CI_Controller
 		$this->load->helper('tgl_indo');
 	}
 
-	function tgl(){
-        echo shortdate_indo('2017-09-5');
-        echo "<br/>";
-        echo date_indo('2017-09-5');
-        echo "<br/>";
-        echo mediumdate_indo('2017-09-5');
-        echo "<br/>";
-        echo longdate_indo('2017-09-5');
-    }
-	
 	public function pendaftaran()
 	{
 		$data['title'] = 'Form Pendaftaran';
@@ -55,6 +45,17 @@ class Form extends CI_Controller
 		$this->load->view('tamplates/footer');
 	}
 
+	public function add()
+	{
+		$tolak = array(
+			'status' => 'tolak',
+			'pesan' => $this->input->post('pesan')
+		 );		
+
+		$this->Form_Model->getbynik($this->input->post('nik'), $tolak);
+		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berkas Berhasil Ditolak</div>');
+		redirect('form/pendaftaran');
+	}
 
 	public function simpan()
 	{
@@ -175,8 +176,8 @@ class Form extends CI_Controller
 	 	            $data = array('no_pas' => $this->input->post('no_pas'), 
 	 	            				'asal_ktp' => $this->input->post('asal_ktp'),
 									'nik' => $this->input->post('nik'),
-									'tgl_terbit' => date('Y-m-d'),
-									'tgl_kadaluwarsa' => date('Y-m-d'),
+									'tgl_terbit' => $this->input->post('tgl_terbit'),
+									'tgl_kadaluwarsa' => $this->input->post('tgl_kadaluwarsa'),
 									'penerbit' => $this->input->post('penerbit'),
 									'nama_kapal' => $this->input->post('nama_kapal'),
 									'tanda_selar' => $this->input->post('tanda_selar'),
@@ -192,7 +193,8 @@ class Form extends CI_Controller
 									'anak_buah' => $this->input->post('anak_buah'),
 									'upload_pas' => $nama_foto_upload_pas,
 									'upload_kapal_datang' => $nama_foto_upload_kapal_datang,
-									'upload_ktp' => $nama_foto_upload_ktp
+									'upload_ktp' => $nama_foto_upload_ktp,
+									'tgl_pengajuan' => date("Y-m-d")
 			 		);
 					$this->Form_Model->simpan($data);
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menambah Pengajuan!</div>');
@@ -219,6 +221,8 @@ class Form extends CI_Controller
 
 	public function ubah()
 	{
+		$tgl_awal      = $this->input->post('tgl_terbit');
+		$tgl_akhir  = $this->input->post('tgl_kadaluwarsa');
 		$upload_pas = $_FILES['upload_pas']['name'];
 					if ($upload_pas) {
 						$config['allowed_types'] = 'gif|jpeg|jpg|png';
@@ -298,8 +302,8 @@ class Form extends CI_Controller
 		$data = array(
 						'no_pas' => $this->input->post('no_pas'),
 						'asal_ktp' => $this->input->post('asal_ktp'),
-						'tgl_terbit' => date('Y-m-d'),
-						'tgl_kadaluwarsa' => date('Y-m-d'),
+						'tgl_terbit' => $this->input->post('tgl_terbit'),
+						'tgl_kadaluwarsa' => $this->input->post('tgl_kadaluwarsa'),
 						'penerbit' => $this->input->post('penerbit'),
 						'nama_kapal' => $this->input->post('nama_kapal'),
 						'tanda_selar' => $this->input->post('tanda_selar'),
@@ -318,6 +322,7 @@ class Form extends CI_Controller
 						'upload_ktp' => $nama_foto_upload_ktp
 		 );
 		$this->Form_Model->ubah($this->input->post('id_kp'),$data);
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Mengubah Data!</div>');
 		redirect('form/pengajuan');
 	}
 

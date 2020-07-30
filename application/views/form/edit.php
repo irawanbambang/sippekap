@@ -1,3 +1,10 @@
+        <script type="text/javascript">
+          $(document).ready(function(){ // Ketika halaman selesai di load
+            $('.input-tanggal').datepicker({
+                dateFormat: 'dd-mm-yy' // Set format tanggalnya jadi yyyy-mm-dd
+            });
+          });  
+        </script>
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
@@ -33,7 +40,7 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Form Pendaftaran Perizinan Kapal</h1>
 
-
+          <?= $this->session->flashdata('message'); ?>
           <?= validation_errors(); ?>
           <?= form_open_multipart('form/ubah'); ?>
             <div class="row">
@@ -224,7 +231,13 @@
           </form>
         </div>
         <!-- /.container-fluid -->
-
+        <script>
+          $(document).ready(function(){ // Ketika halaman selesai di load
+            $('.input-tanggal').datepicker({
+                dateFormat: 'dd-mm-yy' // Set format tanggalnya jadi yyyy-mm-dd
+            });
+          }
+        </script>  
         <script>
           $('#bahan').change(function(){
             let lain = $('#bahan').val();

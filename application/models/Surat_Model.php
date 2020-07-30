@@ -29,6 +29,7 @@ class Surat_Model extends CI_MOdel
 		$this->db->where('tb_kapal.status', 'disahkan');
 		$this->db->or_where('tb_kapal.status', 'verifikasi');
 		$this->db->or_where('tb_kapal.status', 'stempel');
+		$this->db->order_by('tb_kapal.id_kp', 'ASC');
 		return $this->db->get()->result_array();
 	}
 	public function getDisahkan()
@@ -37,6 +38,14 @@ class Surat_Model extends CI_MOdel
 		$this->db->join('tb_identitas_pemilik','tb_kapal.nik = tb_identitas_pemilik.nik');
 		$this->db->where('tb_kapal.status = "disahkan"');
 		$this->db->or_where('tb_kapal.status', 'stempel');
+		$this->db->order_by('id_surat', 'DESC');
+		return $this->db->get('tb_surat')->result_array();
+	}
+	public function cetak($id_surat)
+	{
+		$this->db->where('id_surat = "'.$id_surat.'"');
+		$this->db->join('tb_kapal','tb_kapal.id_kp = tb_surat.id_kp');
+		$this->db->join('tb_identitas_pemilik','tb_kapal.nik = tb_identitas_pemilik.nik');
 		return $this->db->get('tb_surat')->result_array();
 	}
 	public function getnomor()
@@ -48,6 +57,7 @@ class Surat_Model extends CI_MOdel
 
 	public function simpan($data)
 	{
+		$this->db->order_by('id_kp', 'DESC');
 		$this->db->insert('tb_surat', $data);
 	}
 	public function cari($id_kp)
@@ -69,5 +79,12 @@ class Surat_Model extends CI_MOdel
 	{
 		$this->db->where('id_surat = "'.$id_surat.'"');
 		$this->db->update('tb_surat', $data);
+	}
+	public function jmlsurat($tgl_awal,$tgl_akhir)
+	{
+		$where = "tgl_verifikasi BETWEEN '".$tgl_awal."' AND '".$tgl_akhir."'";
+		$this->db->select('COUNT(*) as jml');
+		$this->db->where($where);
+		return $this->db->get('tb_surat')->result_array();
 	}
 }

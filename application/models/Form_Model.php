@@ -19,11 +19,13 @@ class Form_Model extends CI_MOdel
 		$this->db->from('tb_kapal as s');
 		$this->db->join('tb_surat as k', 'k.id_kp = s.id_kp','LEFT outer');
 		$this->db->where('nik', $nik);
+		$this->db->order_by('tgl_pengajuan', 'DESC');
 		return $this->db->get()->result_array();
 	}
 	public function getVerifikasi()
 	{
 		$this->db->where('status != "menunggu"');
+		$this->db->order_by('tgl_pengajuan', 'DESC');
 		return $this->db->get('tb_kapal')->result_array();
 	}
 	public function getnomor()

@@ -26,7 +26,7 @@
                     <tr>
                       <td><?= $no++ ?></td>
                       <td><?= $ps['no_surat'] ?></td>
-                      <td><?= $ps['tgl_terbit'] ?></td>
+                      <td><?= $ps['tgl_verifikasi'] ?></td>
                       <td><?= $ps['nik'] ?></td>
                       <td><?= $ps['nama'] ?></td>
                       <td><?= $ps['nama_kapal'] ?></td>
@@ -36,13 +36,13 @@
                         <td><span class="badge badge-danger">Belum</span></td>
                       <?php } ?>
                       <td>
-                          <a href="<?php echo base_url('Admin/lihat_surat') ?>" class="btn btn-warning btn-box btn-sm" title="Lihat"><i class="fas fa-fw fa-eye"></i>
+                          <a href="<?=base_url()?>Admin/lihat_surat/<?= $ps["id_surat"] ?>" class="btn btn-warning btn-box btn-sm" target="_blank" title="Lihat"><i class="fas fa-fw fa-eye"></i>
                           </a>
                           <?php if($ps['status'] != 'stempel') { ?>
                             <a href="" onclick="ambil_idSurat('<?= $ps['id_surat'] ?>','<?= $ps['id_kp'] ?>')" data-toggle="modal" data-target="#newSubMenuModalSurat" class="btn btn-primary btn-box btn-sm" title="pesan"><i class="fas fa-fw fa-cloud-upload-alt"></i>
-                            </a>
+                            <!-- </a>
                             <a href="<?php echo base_url('Admin/pdf') ?>" class="btn btn-success btn-box btn-sm" title="Download"><i class="fas fa-fw fa-print"></i>
-                            </a>
+                            </a> -->
                           <?php } ?>
                       </td>
                     </tr>

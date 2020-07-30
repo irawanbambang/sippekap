@@ -39,7 +39,7 @@
                     <tr>
                       <td><?= $no++ ?></td>
                       <td><?= $p['no_pas'] ?></td>
-                      <td><?= $p['tgl_terbit'] ?></td>
+                      <td><?= $p['tgl_pengajuan'] ?></td>
                       <td><?= $p['nik'] ?></td>
                       <td><?= $p['nama_kapal'] ?></td>
                       <td><?= $p['status'] ?></td>

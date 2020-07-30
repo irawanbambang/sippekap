@@ -14,8 +14,8 @@
                   <thead class="thead-dark">
                     <tr>
                       <th>#</th>
-                      <th>Nomor_Pas</th>
                       <th>Tanggal Pengajuan</th>
+                      <th>Nomor Pas Kecil</th>
                       <th>NIK Pemilik</th>
                       <th>Nama Kapal</th>
                       <th>Status</th>
@@ -26,8 +26,8 @@
                   <?php $no=1; foreach ($pengajuan as $p) :?>
                     <tr>
                       <td><?= $no++ ?></td>
-                      <td><?= $p['id_kp'] ?></td>
-                      <td><?= $p['tgl_terbit'] ?></td>
+                      <td><?= $p['tgl_pengajuan'] ?></td>
+                      <td><?= $p['no_pas'] ?></td>
                       <td><?= $p['nik'] ?></td>
                       <td><?= $p['nama_kapal'] ?></td>
                       <td><?= $p['status'] ?></td>

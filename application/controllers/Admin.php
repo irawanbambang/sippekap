@@ -178,6 +178,11 @@ class Admin extends CI_Controller
 
 	public function lihat_pengajuan($id_kp)
 	{
+		
+	     $data1=$this->Surat_Model->jmlsurat(date("Y")."-".date("m")."-01",date("Y")."-".date("m")."-31");
+	    foreach ($data1 as $s) {
+	    	$data['jml'] = $s['jml']+1;
+	    }
 		$data['title'] = 'Lihat Pengajuan';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 		
@@ -192,14 +197,14 @@ class Admin extends CI_Controller
 
 	public function verifikasi()
 	{
-		$tgl_awal      = $this->input->post('tgl_terbit');
-		$tgl_akhir  = $this->input->post('tgl_kadaluwarsa');
+		$tgl_awal      = $this->input->post('tgl_terbit_v');
+		$tgl_akhir  = $this->input->post('tgl_kadaluwarsa_v_v');
 
-		if ($tgl_awal > $tgl_akhir) {
+		// if ($tgl_awal > $tgl_akhir) {
 			        	
-			$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Tanggal Terbit tidak boleh lebih besar dari Tanggal Kadaluwarsa!</div>');
-			echo '<script>window.history.back();</script>';
-		}else{
+		// 	$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Tanggal Terbit tidak boleh lebih besar dari Tanggal Kadaluwarsa!</div>');
+		// 	echo '<script>window.history.back();</script>';
+		// }else{
 
 		$data = array(
 						'status' => 'verifikasi'
@@ -209,15 +214,16 @@ class Admin extends CI_Controller
 		$data = array(
 						'id_kp' => $this->input->post('id'),
 						'no_surat' => $this->input->post('no_surat'),
-						'tgl_terbit' => date('Y-m-d'),
-						'tgl_kadaluwarsa' => date('Y-m-d'),
-						'catatan' => $this->input->post('catatan')
+						'tgl_terbit' => $tgl_awal,
+						'tgl_kadaluwarsa' => $tgl_akhir,
+						'catatan' => $this->input->post('catatan'),
+						'tgl_verifikasi'=>date("Y-m-d")
 		 );
 		$this->Surat_Model->simpan($data);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berkas Berhasil di Verifikasi!</div>');
 		redirect('admin/daftar');
 
-		}
+		// }
 	}
 
 	public function tolak()
@@ -878,10 +884,10 @@ public function tahun()
 	// 	$this->dompdf->stream("surat_perizinan_kapal.pdf", array('Attachment' =>0));
 	// }
 
-	public function lihat_surat()
+	public function lihat_surat($id_surat)
 	{
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-		
+		$data['cetak'] = $this->Surat_Model->cetak($id_surat);
 		$this->load->view('admin/pdf/surat_perizinan', $data);
 	}
 

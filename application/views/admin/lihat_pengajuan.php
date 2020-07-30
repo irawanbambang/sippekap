@@ -1,7 +1,19 @@
         <!-- Begin Page Content -->
+        
         <div class="container-fluid">
 
           <?php foreach ($pengajuan as $p) {
+            $tgl_skr = date("Y-m-d");
+            $thn = date("Y");
+            $bln = date("m") + 3;
+            if ($bln > 12) {
+              $bln = $bln - 12;
+              $thn = date("Y") + 1;
+            }
+            if ($bln < 10) {
+              $bln = "0". $bln;
+            }
+            $tgl_kdr = $thn."-".$bln."-".date("d");
             $id_kp = $p['id_kp'];
             $no_pas = $p['no_pas'];
             $tgl_terbit = $p['tgl_terbit'];
@@ -26,7 +38,31 @@
             $upload_kapal_datang = $p['upload_kapal_datang'];
             $status = $p['status'];
 
-          } ?> 
+          } 
+
+           if ($jml<10) {
+              # code...
+              $jml ="00".$jml;
+            }elseif ($jml<100) {
+              # code...
+              $jml="0".$jml;
+            }
+            $bulan = array (
+                              1 =>   'I',
+                              'II',
+                              'III',
+                              'IV',
+                              'V',
+                              'VI',
+                              'VII',
+                              'VIII',
+                              'IX',
+                              'X',
+                              'XI',
+                              'XII'
+                            );
+            $no_surat=$jml."/SPKPI/DKP/" .$bulan[(int)date('m')]."/".date("Y");
+          ?> 
 
                   <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -198,6 +234,13 @@
           </form>
         </div>
         <!-- /.container-fluid -->
+        <script>
+          $(document).ready(function(){ // Ketika halaman selesai di load
+            $('.input-tanggal').datepicker({
+                dateFormat: 'dd-mm-yy' // Set format tanggalnya jadi yyyy-mm-dd
+            });
+          }
+          </script>  
 
         <script>
           $('#bahan').change(function(){
@@ -225,8 +268,6 @@
 
       </div>
       <!-- End of Main Content -->
-
-
 <script>
   function verifikasi(id){
     document.getElementById('id').value=id;
@@ -256,16 +297,18 @@
         <div class="modal-body">
           <div class="form-group">
             <label>Nomor Surat</label>
-             <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Masukkan No. Surat" required>
+             <input type="text" class="form-control" value="<?=$no_surat?>" disabled>
+             <input type="hidden" class="form-control" id="no_surat" name="no_surat" placeholder="Masukkan No. Surat" required value="<?=$no_surat?>">
              <input type="hidden" class="form-control" id="id" name="id" placeholder="Nomor Surat">
           </div>
           <div class="form-group">
               <label>Tanggal Terbit</label>
-              <input type="date" class="form-control" id="tgl_terbit" name="tgl_terbit" placeholder="Tanggal Terbit">
+              <input type="date" class="form-control" id="tgl_terbit_v" name="tgl_terbit_v" value="<?=$tgl_skr?>" placeholder="Tanggal Terbit">
           </div>
           <div class="form-group">
               <label>Tanggal Kadaluwarsa</label>
-              <input type="date" class="form-control" id="tgl_kadaluwarsa" name="tgl_kadaluwarsa" placeholder="Tanggal Kadaluwarsa">
+              <input type="date" class="form-control" id="tgl_kadaluwarsa_v" name="tgl_kadaluwarsa_v" value="<?= $tgl_kdr ?>" placeholder="Tanggal Kadaluwarsa" disabled>
+              <input type="hidden" class="form-control" id="tgl_kadaluwarsa_v_v" name="tgl_kadaluwarsa_v_v" value="<?= $tgl_kdr ?>" placeholder="Tanggal Kadaluwarsa">
           </div>
           <div class="form-group">
               <label>Catatan</label>
@@ -280,7 +323,25 @@
     </div>
   </div>
 </div>
-
+<!-- <script>
+  function input(){
+    var foo = document.getElementById("tgl_terbit_v").value;
+    var arr = foo.split("-");
+    var day = arr[2];
+    var year = arr[0];
+    var mount = parseInt(arr[1])+3;
+    if (mount < 10) {
+      mount = "0"+mount;
+    }
+    if (mount > 12) {
+      mount = parseInt(mount)-12;
+      mount = "0"+mount;
+      year = parseInt(year)+1;
+    }
+    document.getElementById('tgl_kadaluwarsa_v').value = year+"-"+mount+"-"+day;
+    document.getElementById("tgl_kadaluarsa_v");
+  }
+</script> -->
 <!-- Modal Tolak -->
 <div class="modal fade" id="newSubMenuModalTolak" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
